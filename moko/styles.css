@@ -3,6 +3,14 @@
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
+
+a:link,
+a:visited,
+a:hover,
+a:active {
+  color: #fff;
+  text-decoration: none;
+}
 body{
     overflow-x: hidden;
 }
@@ -44,6 +52,9 @@ ol.goudamoko{
 ol.goudamoko li{
     border: 1px solid #fff;
     border-radius: 0.5rem;
+    list-style-position:inside;
+    padding: 1rem 2rem;
+    
 }
 .xinqu{
     background-color: rgb(255, 192, 203);
@@ -55,6 +66,8 @@ ol.goudamoko li{
 .xinqu ul{
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
+    list-style: inside;
+
 }
 .xinqu ul li{
     padding: 0.5rem 1rem;
