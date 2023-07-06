@@ -122,18 +122,20 @@
 
   ul.love{
     background-color: #293047;
-    padding: 0.5rem 1rem;
+    padding: 2rem 8rem;
     border-radius: 0.5rem;
     
-}
+  }
 
-ul.love {
-    padding: 0.5rem 1rem;
+  ul.love {
+    padding: 2rem 8rem;
     border-radius: 0.5rem;
-}
-ul.love li{
-    padding: 0.5rem 1rem;
+
+  }
+
+  ul.love li{
+    padding: 2rem 8rem;
     border-radius: 0.5rem;
     border: 1px solid #fff;
     border-radius: 0.5rem;
-}
+  }
