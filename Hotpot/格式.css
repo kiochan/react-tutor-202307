@@ -119,3 +119,21 @@
     border: 1px solid #fff;
     border-radius: 0.5rem;
   }
+
+  ul.love{
+    background-color: #b0c4de;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    
+}
+
+.love ul{
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+}
+.love ul li{
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid #fff;
+    border-radius: 0.5rem;
+}
