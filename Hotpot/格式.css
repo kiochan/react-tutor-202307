@@ -127,11 +127,11 @@
     
 }
 
-.love ul{
+ul.love {
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
 }
-.love ul li{
+ul.love li{
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
     border: 1px solid #fff;
