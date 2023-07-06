@@ -41,7 +41,9 @@ a:active {
 
 nav ul {
   display: flex;
-}
+  flex: 1;
+  justify-content: end;
+  flex-direction: row;
 
 nav ul li {
   list-style: none;
