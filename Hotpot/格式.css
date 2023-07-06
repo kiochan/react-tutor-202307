@@ -44,6 +44,7 @@ nav ul {
   flex: 1;
   justify-content: end;
   flex-direction: row;
+}
 
 nav ul li {
   list-style: none;
