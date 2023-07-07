@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Game</title>
+    <style>
+        #character {
+            position: absolute;
+            font-size: 2em;
+            font-family: sans-serif;
+            background-color: black;
+            color: aliceblue;
+            left: 0;
+            top: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <span id="character">OwO</span>
+    <script>
+        const SPEED = 10;
+        let character = document.getElementById("character");
+
+        // position
+        let x = 0;
+        let y = 0;
+
+        // button
+        const button = {
+            up: false,
+            down: false,
+            left: false,
+            right: false
+        }
+
+        let register = (value) => (event) => {
+            switch (event.key) {
+                case "ArrowUp":
+                    button.up = value;
+                    break;
+                case "ArrowDown":
+                    button.down = value;
+                    break;
+                case "ArrowLeft":
+                    button.left = value;
+                    break;
+                case "ArrowRight":
+                    button.right = value;
+                    break;
+            }
+        };
+
+        document.addEventListener("keydown", register(true));
+        document.addEventListener("keyup", register(false));
+
+        const gameLoop = () => {
+            if (x < 0) {
+                x = 0
+                return requestAnimationFrame(gameLoop);
+            }
+            if (y < 0) {
+                y = 0
+                return requestAnimationFrame(gameLoop);
+            }
+            if (x > 500) {
+                x = 500
+                return requestAnimationFrame(gameLoop);
+            }
+            if (y > 500) {
+                y = 500
+                return requestAnimationFrame(gameLoop);
+            }
+            console.log(x, y)
+
+            let speedX = 0;
+            let speedY = 0;
+            if (button.up) {
+                speedY = -SPEED;
+            } else if (button.down) {
+                speedY = SPEED;
+            } else {
+                speedY = 0;
+            }
+
+            if (button.left) {
+                speedX = -SPEED;
+            } else if (button.right) {
+                speedX = SPEED;
+            } else {
+                speedX = 0;
+            }
+
+            x += speedX; // x = x + speedX;
+            y += speedY; // y = y + speedY;
+
+            character.style.left = x + "px";
+            character.style.top = y + "px";
+
+            requestAnimationFrame(gameLoop);
+        }
+
+        requestAnimationFrame(gameLoop);
+    </script>
+</body>
+
+</html>
