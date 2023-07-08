@@ -156,7 +156,7 @@ class Game {
     this.playground.style.width = this.width + "px";
     this.playground.style.height = this.height + "px";
     this.playground.style.border = "1px solid black";
-    this.playground.style.position = "absolute";
+    this.playground.style.position = "relateive";
   }
 
   // 将游戏场景添加到DOM中
