@@ -57,6 +57,13 @@ class GameObject {
     }
   }
 
+  getSize() {
+    return {
+      w: this.el.clientWidth,
+      h: this.el.clientHeight,
+    };
+  }
+
   // 这个函数用于更新游戏对象的状态
   render() {
     this.el.style.left = this.x + "px";
@@ -201,8 +208,9 @@ character.spown();
 character.setLogic((character) => {
   let { x, y } = character;
   const { width, height } = character.game;
-  const xMax = width - character.el.clientWidth;
-  const yMax = height - character.el.clientHeight;
+  const { w, h } = character.getSize();
+  const xMax = width - w;
+  const yMax = height - h;
 
   if (x < 0) {
     x = 0;
