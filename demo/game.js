@@ -78,8 +78,21 @@ class Character extends GameObject {
     super();
     this.setName(name);
     this.speed = 10;
+    this.setFontSize(20);
   }
 
+  // 这个函数用于设置角色的大小
+  setFontSize(size) {
+    this.fontSize = size;
+    this.el.style.fontSize = size + "px";
+  }
+
+  // 这个函数用于获取角色的大小
+  getFontSize() {
+    return this.fontSize;
+  }
+
+  // 这个函数用于创建角色的元素
   createElement() {
     super.createElement();
     this.el.style.backgroundColor = "#000";
