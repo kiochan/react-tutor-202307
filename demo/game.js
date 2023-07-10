@@ -81,45 +81,75 @@ class GameObject {
   }
 }
 
-// 这个类用于表示角色
-class Character extends GameObject {
-  // 这个函数用于初始化角色
+class NamedObject extends GameObject {
   constructor(name) {
     super();
     this.__type__ = "Character";
     this.setName(name);
-    this.speed = 10;
     this.setFontSize(20);
-    this.point = 0;
   }
 
-  // 这个函数用于设置角色的大小
   setFontSize(size) {
     this.fontSize = size;
     this.el.style.fontSize = size + "px";
   }
 
-  // 这个函数用于获取角色的大小
   getFontSize() {
     return this.fontSize;
   }
 
-  // 这个函数用于创建角色的元素
   createElement() {
     super.createElement();
     this.el.style.backgroundColor = "#000";
     this.el.style.color = "#fff";
   }
 
-  // 这个函数用于设置角色的名字
   setName(name) {
     this.name = name;
     this.el.innerText = this.name;
   }
 
-  // 这个函数用于获取角色的名字
   getName() {
     return this.name;
+  }
+}
+
+// 这个类用于表示角色
+class Character extends NamedObject {
+  // 这个函数用于初始化角色
+  constructor(name) {
+    super();
+    this.__type__ = "Character";
+    this.setName(name);
+    this.speed = 1;
+    this.point = 0;
+  }
+
+  update() {
+    super.update();
+    const { speed } = character;
+    const { width, height } = character.game;
+    const { w, h } = character.getSize();
+    const xMax = width - w;
+    const yMax = height - h;
+
+    let { x, y } = character;
+    let speedX = 0;
+    let speedY = 0;
+    if (character.game.key.ArrowUp) speedY = -speed;
+    if (character.game.key.ArrowDown) speedY = speed;
+    if (character.game.key.ArrowLeft) speedX = -speed;
+    if (character.game.key.ArrowRight) speedX = speed;
+
+    x += speedX;
+    y += speedY;
+
+    if (x < 0) x = 0;
+    if (y < 0) y = 0;
+    if (x > xMax) x = xMax;
+    if (y > yMax) y = yMax;
+
+    character.moveTo(x, y);
   }
 }
 
