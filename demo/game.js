@@ -130,12 +130,12 @@ class RandomNamedObject extends Character {
 
   spown() {
     super.spown();
-    const { width, heigth } = this.game;
+    const { width, height } = this.game;
     const { w, h } = this.getSize();
     do {
-      this.moveTo(Math.random() * (width - w), Math.random() * (heigth - h));
+      this.moveTo(Math.random() * (width - w), Math.random() * (height - h));
     } while (
-      [this.game.gameObjects].some((gameObject) => {
+      [...this.game.gameObjects].some((gameObject) => {
         this.isIntersectedWith(gameObject);
       })
     );
