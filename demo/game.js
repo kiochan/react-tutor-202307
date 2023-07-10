@@ -324,55 +324,24 @@ character.spown();
 
 // 为角色添加逻辑
 character.setLogic((character) => {
-  let { x, y } = character;
-  const { width, height } = character.game;
-  const { w, h } = character.getSize();
-  const xMax = width - w;
-  const yMax = height - h;
+  const { game } = character;
+  const now = Date.now();
+  character.game.lastFoodSpownTime ??= character.game.startTime;
+  character.game.lastObstacleSpownTime ??= character.game.startTime;
 
-  if (x < 0) {
-    x = 0;
-    character.moveTo(x, y);
-    return;
-  }
-  if (y < 0) {
-    y = 0;
-    character.moveTo(x, y);
-    return;
-  }
-  if (x > xMax) {
-    x = xMax;
-    character.moveTo(x, y);
-    return;
-  }
-  if (y > yMax) {
-    y = yMax;
-    character.moveTo(x, y);
-    return;
+  if (now - character.game.lastFoodSpownTime > 200) {
+    const food = new Food();
+    game.addGameObject(food);
+    food.spown();
+    character.game.lastFoodSpownTime = now;
   }
 
-  const SPEED = character.speed;
-  let speedX = 0;
-  let speedY = 0;
-  if (character.game.key.ArrowUp) {
-    speedY = -SPEED;
-  } else if (character.game.key.ArrowDown) {
-    speedY = SPEED;
-  } else {
-    speedY = 0;
+  if (now - character.game.lastObstacleSpownTime > 1000) {
+    const obstacle = new Obstacle();
+    game.addGameObject(obstacle);
+    obstacle.spown();
+    character.game.lastObstacleSpownTime = now;
   }
-
-  if (character.game.key.ArrowLeft) {
-    speedX = -SPEED;
-  } else if (character.game.key.ArrowRight) {
-    speedX = SPEED;
-  } else {
-    speedX = 0;
-  }
-
-  x += speedX;
-  y += speedY;
-  character.moveTo(x, y);
 });
 
 // 开始游戏
