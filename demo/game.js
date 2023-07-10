@@ -122,6 +122,13 @@ class Character extends NamedObject {
     this.setName(name);
     this.speed = 1;
     this.point = 0;
+    this.alive = true;
+  }
+
+  spown() {
+    super.spown();
+    this.alive = true;
+    this.el.style.backgroundColor = "#000";
   }
 
   update() {
@@ -149,6 +156,11 @@ class Character extends NamedObject {
     if (y > yMax) y = yMax;
 
     character.moveTo(x, y);
+  }
+
+  dead() {
+    this.alive = false;
+    this.el.style.backgroundColor = "#f00";
   }
 }
 
