@@ -69,6 +69,15 @@ class GameObject {
     this.el.style.left = this.x + "px";
     this.el.style.top = this.y + "px";
   }
+
+  // 判断相交
+  isIntersectedWith(gameObject) {
+    const { x: x1, y: y1 } = this.getPosition();
+    const { x: x2, y: y2 } = gameObject.getPosition();
+    const { w: w1, h: h1 } = this.getSize();
+    const { w: w2, h: h2 } = gameObject.getSize();
+    return x1 < x2 + w2 && x1 + w1 > x2 && y1 < y2 + h2 && y1 + h1 > y2;
+  }
 }
 
 // 这个类用于表示角色
