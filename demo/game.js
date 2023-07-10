@@ -177,9 +177,9 @@ class RandomNamedObject extends NamedObject {
     do {
       this.moveTo(Math.random() * (width - w), Math.random() * (height - h));
     } while (
-      [...this.game.gameObjects].some((gameObject) => {
-        this.isIntersectedWith(gameObject);
-      })
+      [...this.game.gameObjects].some((gameObject) =>
+        this.isIntersectedWith(gameObject)
+      )
     );
   }
 }
