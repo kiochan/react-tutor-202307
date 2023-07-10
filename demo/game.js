@@ -41,7 +41,6 @@ class GameObject {
 
   // 这个函数用于设置游戏对象的位置
   moveTo(x, y) {
-    console.log(x, y);
     this.x = x;
     this.y = y;
   }
