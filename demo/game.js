@@ -122,6 +122,43 @@ class Character extends GameObject {
   }
 }
 
+class RandomNamedObject extends Character {
+  constructor(name) {
+    super(name);
+    this.__type__ = "RandomNamedObject";
+  }
+
+  spown() {
+    super.spown();
+    const { width, heigth } = this.game;
+    const { w, h } = this.getSize();
+    do {
+      this.moveTo(Math.random() * (width - w), Math.random() * (heigth - h));
+    } while (
+      [this.game.gameObjects].some((gameObject) => {
+        this.isIntersectedWith(gameObject);
+      })
+    );
+  }
+}
+
+class Food extends RandomNamedObject {
+  constructor() {
+    super();
+    this.__type__ = "Food";
+    this.setName("🍎");
+  }
+}
+
+// 障碍物类
+class Obstacle extends RandomNamedObject {
+  constructor() {
+    super();
+    this.__type__ = "Obstacle";
+    this.setName("🌲");
+  }
+}
+
 // 这个类用于控制游戏的运行
 class Game {
   //  这个函数用于初始化游戏
