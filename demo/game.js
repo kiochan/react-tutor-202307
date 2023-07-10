@@ -90,6 +90,7 @@ class Character extends GameObject {
     this.setName(name);
     this.speed = 10;
     this.setFontSize(20);
+    this.point = 0;
   }
 
   // 这个函数用于设置角色的大小
