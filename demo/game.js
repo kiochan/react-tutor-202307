@@ -2,6 +2,7 @@
 class GameObject {
   // 这个函数用于初始化游戏对象
   constructor() {
+    this.__type__ = "GameObject";
     this.x = 0;
     this.y = 0;
     this.createElement();
@@ -85,6 +86,7 @@ class Character extends GameObject {
   // 这个函数用于初始化角色
   constructor(name) {
     super();
+    this.__type__ = "Character";
     this.setName(name);
     this.speed = 10;
     this.setFontSize(20);
