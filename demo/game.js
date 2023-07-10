@@ -164,7 +164,7 @@ class Character extends NamedObject {
   }
 }
 
-class RandomNamedObject extends Character {
+class RandomNamedObject extends NamedObject {
   constructor(name) {
     super(name);
     this.__type__ = "RandomNamedObject";
@@ -304,6 +304,7 @@ class Game {
 
   // 开始运行
   start() {
+    this.a = Date.now();
     requestAnimationFrame(this.gameLoop.bind(this));
     this.startTime = Date.now();
     this.running = true;
