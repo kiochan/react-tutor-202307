@@ -179,6 +179,18 @@ class Food extends RandomNamedObject {
     this.__type__ = "Food";
     this.setName("🍎");
   }
+
+  update() {
+    super.update();
+    Array.from(this.game.gameObjects)
+      .filter((gameObject) => gameObject.__type__ === "Character")
+      .filter((character) => this.isIntersectedWith(character))
+      .forEach((character) => {
+        character.point += 1;
+        this.disspown();
+        this.game.removeGameObject(this);
+      });
+  }
 }
 
 // 障碍物类
@@ -187,6 +199,17 @@ class Obstacle extends RandomNamedObject {
     super();
     this.__type__ = "Obstacle";
     this.setName("🌲");
+  }
+
+  update() {
+    super.update();
+    Array.from(this.game.gameObjects)
+      .filter((gameObject) => gameObject.__type__ === "Character")
+      .filter((character) => this.isIntersectedWith(character))
+      .forEach((character) => {
+        character.dead();
+        this.game.stop();
+      });
   }
 }
 
