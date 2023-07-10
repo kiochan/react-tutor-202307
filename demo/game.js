@@ -208,9 +208,10 @@ class Game {
 
   // 这个函数负责游戏的主循环
   gameLoop() {
+    if (!this.running) return;
     this.update();
     this.render();
-    this.timer = requestAnimationFrame(this.gameLoop.bind(this));
+    requestAnimationFrame(this.gameLoop.bind(this));
   }
 
   // 初始化
@@ -239,12 +240,14 @@ class Game {
 
   // 开始运行
   start() {
-    this.timer = requestAnimationFrame(this.gameLoop.bind(this));
+    requestAnimationFrame(this.gameLoop.bind(this));
+    this.startTime = Date.now();
+    this.running = true;
   }
 
   // 停止运行
   stop() {
-    cancelAnimationFrame(this.timer);
+    this.running = false;
   }
 }
 
