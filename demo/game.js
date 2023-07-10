@@ -142,10 +142,10 @@ class Character extends NamedObject {
     let { x, y } = character;
     let speedX = 0;
     let speedY = 0;
-    if (character.game.key.ArrowUp) speedY = -speed;
-    if (character.game.key.ArrowDown) speedY = speed;
-    if (character.game.key.ArrowLeft) speedX = -speed;
-    if (character.game.key.ArrowRight) speedX = speed;
+    if (character.game.key.ArrowUp) speedY += -speed;
+    if (character.game.key.ArrowDown) speedY += speed;
+    if (character.game.key.ArrowLeft) speedX += -speed;
+    if (character.game.key.ArrowRight) speedX += speed;
 
     x += speedX;
     y += speedY;
