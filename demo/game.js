@@ -242,6 +242,7 @@ class Game {
 
   // 这个函数用于移除游戏对象
   removeGameObject(gameObject) {
+    gameObject.disspown();
     this.gameObjects.delete(gameObject);
     gameObject.setGame(undefined);
   }
