@@ -42,7 +42,7 @@ class GameObject extends WithState {
 
   delete() {
     this.disspown()
-    this.removeGameObject(this)
+    this.getGame()?.removeGameObject(this)
     return this;
   }
 
