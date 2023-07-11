@@ -2,10 +2,20 @@
 class GameObject {
   // 这个函数用于初始化游戏对象
   constructor() {
-    this.__type__ = "GameObject";
+    this.__type__ = [];
     this.x = 0;
     this.y = 0;
     this.createElement();
+  }
+
+  // 设置游戏对象类型
+  setType(type) {
+    this.__type__.push("GameObject");
+  }
+
+  // 检查类型是不是存在
+  hasType(type) {
+    return "GameObject" in this.__type__.includes(type);
   }
 
   // 这个函数用于创建游戏对象的元素
@@ -83,7 +93,7 @@ class GameObject {
 class NamedObject extends GameObject {
   constructor(name) {
     super();
-    this.__type__ = "Character";
+    this.setType("Character");
     this.setName(name);
     this.setFontSize(20);
   }
@@ -118,7 +128,7 @@ class Character extends NamedObject {
   // 这个函数用于初始化角色
   constructor(name) {
     super();
-    this.__type__ = "Character";
+    this.setType("Character");
     this.setName(name);
     this.speed = 1;
     this.point = 0;
@@ -167,7 +177,7 @@ class Character extends NamedObject {
 class RandomNamedObject extends NamedObject {
   constructor(name) {
     super(name);
-    this.__type__ = "RandomNamedObject";
+    this.setType("RandomNamedObject");
   }
 
   spown() {
@@ -187,14 +197,14 @@ class RandomNamedObject extends NamedObject {
 class Food extends RandomNamedObject {
   constructor() {
     super();
-    this.__type__ = "Food";
+    this.setType("Food");
     this.setName("🍎");
   }
 
   update() {
     super.update();
     Array.from(this.game.gameObjects)
-      .filter((gameObject) => gameObject.__type__ === "Character")
+      .filter((gameObject) => gameObject.hasType("Character"))
       .filter((character) => this.isIntersectedWith(character))
       .forEach((character) => {
         character.point += 1;
@@ -208,14 +218,14 @@ class Food extends RandomNamedObject {
 class Obstacle extends RandomNamedObject {
   constructor() {
     super();
-    this.__type__ = "Obstacle";
+    this.setType("Obstacle");
     this.setName("🌲");
   }
 
   update() {
     super.update();
     Array.from(this.game.gameObjects)
-      .filter((gameObject) => gameObject.__type__ === "Character")
+      .filter((gameObject) => gameObject.hasType("Character"))
       .filter((character) => this.isIntersectedWith(character))
       .forEach((character) => {
         character.dead();
