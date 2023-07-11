@@ -24,6 +24,22 @@ class GameObject extends WithState {
     this.createElement();
   }
 
+  // 添加进游戏
+  addToGame(game) {
+    game.addGameObject(this)
+    return this;
+  }
+
+  getGame() {
+    return this.game;
+  }
+
+  delete() {
+    this.disspown()
+    this.removeGameObject(this)
+    return this;
+  }
+
   // 设置游戏对象类型
   setType(type) {
     this.__type__.push("GameObject");
@@ -52,13 +68,13 @@ class GameObject extends WithState {
 
   // 这个函数用于将游戏对象添加到游戏中
   spown() {
-    this.game.getDom().appendChild(this.el);
+    this.getGame().getDom().appendChild(this.el);
     return this;
   }
 
   // 这个函数用于将游戏对象从游戏中移除
   disspown() {
-    this.game.getDom().removeChild(this.el);
+    this.getGame().getDom().removeChild(this.el);
     return this;
   }
 
@@ -181,10 +197,10 @@ class Character extends NamedObject {
     let { x, y } = character;
     let speedX = 0;
     let speedY = 0;
-    if (character.game.key.ArrowUp) speedY += -speed;
-    if (character.game.key.ArrowDown) speedY += speed;
-    if (character.game.key.ArrowLeft) speedX += -speed;
-    if (character.game.key.ArrowRight) speedX += speed;
+    if (character.getGame().key.ArrowUp) speedY += -speed;
+    if (character.getGame().key.ArrowDown) speedY += speed;
+    if (character.getGame().key.ArrowLeft) speedX += -speed;
+    if (character.getGame().key.ArrowRight) speedX += speed;
 
     x += speedX;
     y += speedY;
@@ -218,7 +234,7 @@ class RandomNamedObject extends NamedObject {
     do {
       this.moveTo(Math.random() * (width - w), Math.random() * (height - h));
     } while (
-      [...this.game.gameObjects].some((gameObject) =>
+      this.getGame().getGameObjects().some((gameObject) =>
         this.isIntersectedWith(gameObject)
       )
     );
@@ -235,13 +251,13 @@ class Food extends RandomNamedObject {
 
   update() {
     super.update();
-    Array.from(this.game.gameObjects)
+    this.getGame().getGameObjects()
       .filter((gameObject) => gameObject.hasType("Character"))
       .filter((character) => this.isIntersectedWith(character))
       .forEach((character) => {
         character.point += 1;
         this.disspown();
-        this.game.removeGameObject(this);
+        this.getGame().removeGameObject(this);
       });
       return this;
   }
@@ -257,12 +273,12 @@ class Obstacle extends RandomNamedObject {
 
   update() {
     super.update();
-    Array.from(this.game.gameObjects)
+    this.getGame().getGameObjects()
       .filter((gameObject) => gameObject.hasType("Character"))
       .filter((character) => this.isIntersectedWith(character))
       .forEach((character) => {
         character.dead();
-        this.game.stop();
+        this.getGame().stop();
       });
       return this;
   }
@@ -293,6 +309,11 @@ class Game extends WithState {
     this.gameObjects.delete(gameObject);
     gameObject.setGame(undefined);
     return this;
+  }
+
+  //获得游戏对象
+  getGameObjects () {
+    return Array.from(this.gameObjects)
   }
 
   // 这个函数负责更新游戏的状态
@@ -374,45 +395,37 @@ class Game extends WithState {
   }
 }
 
-// 创建一个游戏
-const game = new Game({ width: 500, height: 500 });
 
-// 初始化游戏
-game.init();
-
-// 将游戏添加到DOM中
-game.appendToDom(document.body);
 
 // 创建一个角色
-const character = new Character("OwO");
-
+new Character("OwO")
 // 将角色添加到游戏中
-game.addGameObject(character);
-
-// 将角色添加到游戏中
-character.spown();
-
+.addToGame(
+  // 创建一个游戏
+  new Game({ width: 500, height: 500 }).init().appendToDom(document.body)
+)
+// 添加到场景中
+.spown()
 // 为角色添加逻辑
-character.setLogic((character) => {
+.setLogic((character) => {
   const { game } = character;
   const now = Date.now();
-  character.game.setState("lastFoodSpownTime", state => state.startTime);
-  character.game.setState("lastObstacleSpownTime", state => state.startTime);
+  character.getGame().setState("lastFoodSpownTime", state => state.startTime);
+  character.getGame().setState("lastObstacleSpownTime", state => state.startTime);
 
-  if (now - character.game.getState("lastFoodSpownTime") > 200) {
+  if (now - character.getGame().getState("lastFoodSpownTime") > 200) {
     const food = new Food();
     game.addGameObject(food);
     food.spown();
-    character.game.setState("lastFoodSpownTime", () => now);
+    character.getGame().setState("lastFoodSpownTime", () => now);
   }
 
-  if (now - character.game.getState("{lastObstacleSpownTime}") > 1000) {
+  if (now - character.getGame().getState("{lastObstacleSpownTime}") > 1000) {
     const obstacle = new Obstacle();
     game.addGameObject(obstacle);
     obstacle.spown();
-    character.game.setState("lastObstacleSpownTime", () => now);
+    character.getGame().setState("lastObstacleSpownTime", () => now);
   }
-});
-
+})
 // 开始游戏
-game.start();
+.getGame().start();
