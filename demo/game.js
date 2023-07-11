@@ -174,7 +174,7 @@ class Character extends NamedObject {
     super();
     this.setType("Character");
     this.setName(name);
-    this.speed = 1;
+    this.speed = 5;
     this.point = 0;
     this.alive = true;
   }
@@ -188,19 +188,21 @@ class Character extends NamedObject {
 
   update() {
     super.update();
-    const { speed } = character;
-    const { width, height } = character.game;
-    const { w, h } = character.getSize();
+    const { speed } = this;
+    const game = this.getGame()
+    const { width, height } = game;
+    const { w, h } = this.getSize();
     const xMax = width - w;
     const yMax = height - h;
+    const keyMap = game.getKeyMap();
 
-    let { x, y } = character;
+    let { x, y } = this;
     let speedX = 0;
     let speedY = 0;
-    if (character.getGame().key.ArrowUp) speedY += -speed;
-    if (character.getGame().key.ArrowDown) speedY += speed;
-    if (character.getGame().key.ArrowLeft) speedX += -speed;
-    if (character.getGame().key.ArrowRight) speedX += speed;
+    if (keyMap.ArrowUp) speedY += -speed;
+    if (keyMap.ArrowDown) speedY += speed;
+    if (keyMap.ArrowLeft) speedX += -speed;
+    if (keyMap.ArrowRight) speedX += speed;
 
     x += speedX;
     y += speedY;
@@ -210,8 +212,7 @@ class Character extends NamedObject {
     if (x > xMax) x = xMax;
     if (y > yMax) y = yMax;
 
-    character.moveTo(x, y);
-    return this;
+    return this.moveTo(x, y);
   }
 
   dead() {
@@ -326,6 +327,9 @@ class Game extends WithState {
 
   // 这个函数负责更新游戏的逻辑
   update() {
+    if (typeof this.logic === "function") {
+      this.logic(this);
+    }
     for (const gameObject of this.gameObjects) {
       gameObject.update();
     }
@@ -343,6 +347,12 @@ class Game extends WithState {
     return this;
   };
 
+  // 获得按盘
+  getKeyMap() {
+    return {...this.key}
+  }
+
+
   // 这个函数负责游戏的主循环
   gameLoop() {
     if (!this.running) return;
@@ -357,6 +367,10 @@ class Game extends WithState {
     this.registerKeyEvent();
     this.initPlayground();
     return this;
+  }
+
+  setLogic(logicFc) {
+    this.logic = logicFc
   }
 
   // 初始化游戏场景
@@ -402,30 +416,32 @@ new Character("OwO")
 // 将角色添加到游戏中
 .addToGame(
   // 创建一个游戏
-  new Game({ width: 500, height: 500 }).init().appendToDom(document.body)
+  new Game({ width: 500, height: 500 })
+  .init().appendToDom(document.body)
+  // 为游戏添加逻辑
+  .setLogic(
+    (game) => {
+      const now = Date.now();
+      game.setState("lastFoodSpownTime", state => state.startTime);
+      game.setState("lastObstacleSpownTime", state => state.startTime);
+    
+      if (now - game.getState("lastFoodSpownTime") > 200) {
+        const food = new Food();
+        game.addGameObject(food);
+        food.spown();
+        game.setState("lastFoodSpownTime", () => now);
+      }
+    
+      if (now - game.getState("{lastObstacleSpownTime}") > 1000) {
+        const obstacle = new Obstacle();
+        game.addGameObject(obstacle);
+        obstacle.spown();
+        game.setState("lastObstacleSpownTime", () => now);
+      }
+    }
+  )
 )
 // 添加到场景中
 .spown()
-// 为角色添加逻辑
-.setLogic((character) => {
-  const { game } = character;
-  const now = Date.now();
-  character.getGame().setState("lastFoodSpownTime", state => state.startTime);
-  character.getGame().setState("lastObstacleSpownTime", state => state.startTime);
-
-  if (now - character.getGame().getState("lastFoodSpownTime") > 200) {
-    const food = new Food();
-    game.addGameObject(food);
-    food.spown();
-    character.getGame().setState("lastFoodSpownTime", () => now);
-  }
-
-  if (now - character.getGame().getState("{lastObstacleSpownTime}") > 1000) {
-    const obstacle = new Obstacle();
-    game.addGameObject(obstacle);
-    obstacle.spown();
-    character.getGame().setState("lastObstacleSpownTime", () => now);
-  }
-})
 // 开始游戏
 .getGame().start();
