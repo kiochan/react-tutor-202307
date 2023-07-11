@@ -230,12 +230,13 @@ class RandomNamedObject extends NamedObject {
 
   spown() {
     super.spown();
-    const { width, height } = this.game;
+    const game = this.getGame();
+    const { width, height } = game;
     const { w, h } = this.getSize();
     do {
       this.moveTo(Math.random() * (width - w), Math.random() * (height - h));
     } while (
-      this.getGame().getGameObjects().some((gameObject) =>
+      game.getGameObjects().some((gameObject) =>
         this.isIntersectedWith(gameObject)
       )
     );
