@@ -42,7 +42,7 @@ class GameObject extends WithState {
 
   // 设置游戏对象类型
   setType(type) {
-    this.__type__.push("GameObject");
+    this.__type__.push(type);
     return this;
   }
 
