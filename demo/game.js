@@ -221,12 +221,14 @@ class Character extends NamedObject {
     const game = this.getGame()
     const { w, h } = this.getSize();
     const keyMap = game.getKeyMap();
+    const xMax = game.width - w
+    const yMax = game.height - h
 
     let { x, y } = this.getPosition();
     x += speed * (+Boolean(keyMap.ArrowRight) - Boolean(keyMap.ArrowLeft));
     y += speed * (+Boolean(keyMap.ArrowDown) - Boolean(keyMap.ArrowUp));
-    if (x < 0) x = 0; if (x > xMax) x = game.width - w;
-    if (y < 0) y = 0; if (y > yMax) y = game.height - h;
+    if (x < 0) x = 0; if (x > xMax) x = xMax;
+    if (y < 0) y = 0; if (y > yMax) y = yMax;
 
     return this.moveTo(x, y);
   }
@@ -266,6 +268,7 @@ class RandomNamedObject extends NamedObject {
       gameObject.isIntersectedWith(this)
       )
     );
+    if (i >= 100) this.delete();
     return this;
   }
 }
