@@ -467,9 +467,7 @@ new Game({ width: 500, height: 500 })
 .setLogic(
   (game) => {
     const now = Date.now();
-    game.setStateIfNotExist("lastFoodSpownTime", state => state.startTime);
-    game.setStateIfNotExist("lastObstacleSpownTime", state => state.startTime);
-  
+ 
     if (now - game.getState("lastFoodSpownTime") > 1000) {
       new Food()
       .addToGame(game.setState("lastFoodSpownTime", () => now))
@@ -485,6 +483,9 @@ new Game({ width: 500, height: 500 })
 )
 // 准备开始
 .prepareToStart((game) => {
+  game.setStateIfNotExist("lastFoodSpownTime", state => state.startTime);
+  game.setStateIfNotExist("lastObstacleSpownTime", state => state.startTime);
+  
   // 将角色添加到游戏中
   game
   .getGameObjects()
