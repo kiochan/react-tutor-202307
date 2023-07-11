@@ -7,7 +7,7 @@ class WithState {
     this.state[name] =  setter(this.state);
   };
 
-  getSatet(name) {
+  getState(name) {
     return this.state[name];
   }
 }
@@ -16,6 +16,7 @@ class WithState {
 class GameObject extends WithState {
   // 这个函数用于初始化游戏对象
   constructor() {
+    super();
     this.__type__ = [];
     this.x = 0;
     this.y = 0;
@@ -252,6 +253,7 @@ class Obstacle extends RandomNamedObject {
 class Game extends WithState {
   //  这个函数用于初始化游戏
   constructor({ width, height }) {
+    super();
     this.width = width;
     this.height = height;
     this.state = Object.create(null)
@@ -367,18 +369,18 @@ character.setLogic((character) => {
   character.game.setState("lastFoodSpownTime", state => state.startTime);
   character.game.setState("lastObstacleSpownTime", state => state.startTime);
 
-  if (now - character.game.lastFoodSpownTime > 200) {
+  if (now - character.game.getState("lastFoodSpownTime") > 200) {
     const food = new Food();
     game.addGameObject(food);
     food.spown();
-    character.game.setState("lastFoodSpownTime", now);
+    character.game.setState("lastFoodSpownTime", () => now);
   }
 
-  if (now - character.game.lastObstacleSpownTime > 1000) {
+  if (now - character.game.getState("{lastObstacleSpownTime}") > 1000) {
     const obstacle = new Obstacle();
     game.addGameObject(obstacle);
     obstacle.spown();
-    character.game.setState("lastObstacleSpownTime", now);
+    character.game.setState("lastObstacleSpownTime", () => now);
   }
 });
 
