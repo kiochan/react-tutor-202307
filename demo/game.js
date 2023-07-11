@@ -426,17 +426,15 @@ new Character("OwO")
       game.setState("lastObstacleSpownTime", state => state.startTime);
     
       if (now - game.getState("lastFoodSpownTime") > 200) {
-        const food = new Food();
-        game.addGameObject(food);
-        food.spown();
-        game.setState("lastFoodSpownTime", () => now);
+        new Food()
+        .addToGame(game.setState("lastFoodSpownTime", () => now))
+        .spown();
       }
     
-      if (now - game.getState("{lastObstacleSpownTime}") > 1000) {
-        const obstacle = new Obstacle();
-        game.addGameObject(obstacle);
-        obstacle.spown();
-        game.setState("lastObstacleSpownTime", () => now);
+      if (now - game.getState("lastObstacleSpownTime") > 1000) {
+        new Obstacle()
+        .addToGame(game.setState("lastObstacleSpownTime", () => now))
+        .spown();
       }
     }
   )
