@@ -230,6 +230,7 @@ class Game {
   constructor({ width, height }) {
     this.width = width;
     this.height = height;
+    this.state = Object.create(null)
     this.init();
   }
 
