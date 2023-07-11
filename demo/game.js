@@ -48,7 +48,7 @@ class GameObject extends WithState {
 
   // 检查类型是不是存在
   hasType(type) {
-    return "GameObject" in this.__type__.includes(type);
+    return this.__type__.includes(type);
   }
 
   // 这个函数用于创建游戏对象的元素
@@ -236,7 +236,7 @@ class RandomNamedObject extends NamedObject {
     do {
       this.moveTo(Math.random() * (width - w), Math.random() * (height - h));
     } while (
-      game.getGameObjects().some((gameObject) =>
+      false && game.getGameObjects().some((gameObject) =>
         this.isIntersectedWith(gameObject)
       )
     );
@@ -397,9 +397,8 @@ class Game extends WithState {
 
   // 开始运行
   start() {
-    this.a = Date.now();
     requestAnimationFrame(this.gameLoop.bind(this));
-    this.startTime = Date.now();
+    this.setState("startTime", () => Date.now());
     this.running = true;
     return this;
   }
