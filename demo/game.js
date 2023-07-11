@@ -4,9 +4,14 @@ class WithState {
   }
 
   setState(name, setter) {
-    this.state[name] =  setter(this.state);
+    this.state[name] = setter(this.state);
     return this;
   };
+
+  setStateIfNotExist(name, setter) {
+    this.state[name] ??= setter(this.state);
+    return this;
+  }
 
   getState(name) {
     return this.state[name];
@@ -21,6 +26,7 @@ class GameObject extends WithState {
     this.__type__ = [];
     this.x = 0;
     this.y = 0;
+    this.setType("GameObject")
     this.createElement();
   }
 
@@ -74,7 +80,13 @@ class GameObject extends WithState {
 
   // 这个函数用于将游戏对象从游戏中移除
   disspown() {
-    this.getGame().getDom().removeChild(this.el);
+    const game = this.getGame();
+    if (game === undefined) return this;
+    const root = game.getDom();
+    if (root === undefined) return this;
+    if (root.contains(this.el)) {
+      root.removeChild(this.el);
+    }
     return this;
   }
 
@@ -129,12 +141,22 @@ class GameObject extends WithState {
     const { w: w2, h: h2 } = gameObject.getSize();
     return x1 < x2 + w2 && x1 + w1 > x2 && y1 < y2 + h2 && y1 + h1 > y2;
   }
+
+  onClick(cb) {
+    this.el.addEventListener("click", cb)
+    return this
+  }
+
+  offClick(cb) {
+    this.el.removeEventListener("click", cb)
+    return this
+  }
 }
 
 class NamedObject extends GameObject {
   constructor(name) {
     super();
-    this.setType("Character");
+    this.setType("NamedObject");
     this.setName(name);
     this.setFontSize(20);
   }
@@ -151,8 +173,13 @@ class NamedObject extends GameObject {
 
   createElement() {
     super.createElement();
-    this.el.style.backgroundColor = "#000";
-    this.el.style.color = "#fff";
+    this.setColor();
+    return this;
+  }
+
+  setColor(fg = "#fff", bg = "#000") {
+    this.el.style.backgroundColor = bg;
+    this.el.style.color = fg;
     return this;
   }
 
@@ -175,14 +202,14 @@ class Character extends NamedObject {
     this.setType("Character");
     this.setName(name);
     this.speed = 5;
-    this.point = 0;
-    this.alive = true;
+    this.setState("point", () => 0);
+    this.setState("alive", () => false);
   }
 
   spown() {
     super.spown();
-    this.alive = true;
-    this.el.style.backgroundColor = "#000";
+    this.setState("alive", () => true);
+    this.setColor("#fff", "#000");
     return this;
   }
 
@@ -215,9 +242,15 @@ class Character extends NamedObject {
     return this.moveTo(x, y);
   }
 
-  dead() {
-    this.alive = false;
-    this.el.style.backgroundColor = "#f00";
+  grow() {
+    this.setState("point", (state) => (state.point + 1))
+    this.setFontSize(this.getFontSize() + 1);
+    return this;
+  }
+
+  dead() { 
+    this.setState("alive", () => false);
+    this.setColor("#aaa", "#f00");
     return this;
   }
 }
@@ -233,11 +266,13 @@ class RandomNamedObject extends NamedObject {
     const game = this.getGame();
     const { width, height } = game;
     const { w, h } = this.getSize();
+    let i = 0;
     do {
       this.moveTo(Math.random() * (width - w), Math.random() * (height - h));
+      i++;
     } while (
-      false && game.getGameObjects().some((gameObject) =>
-        this.isIntersectedWith(gameObject)
+      i < 100 && game.getGameObjects().some((gameObject) =>
+      gameObject.isIntersectedWith(this)
       )
     );
     return this;
@@ -255,11 +290,12 @@ class Food extends RandomNamedObject {
     super.update();
     this.getGame().getGameObjects()
       .filter((gameObject) => gameObject.hasType("Character"))
-      .filter((character) => this.isIntersectedWith(character))
+      .filter((gameObject) => gameObject.hasType("Character"))
+      .filter((character) => character.isIntersectedWith(this))
       .forEach((character) => {
-        character.point += 1;
-        this.disspown();
-        this.getGame().removeGameObject(this);
+        character
+        .grow()
+        .getGame().removeGameObject(this);
       });
       return this;
   }
@@ -277,10 +313,10 @@ class Obstacle extends RandomNamedObject {
     super.update();
     this.getGame().getGameObjects()
       .filter((gameObject) => gameObject.hasType("Character"))
-      .filter((character) => this.isIntersectedWith(character))
+      .filter((character) => character.isIntersectedWith(this))
       .forEach((character) => {
-        character.dead();
-        this.getGame().stop();
+        character.dead()
+        .getGame().stop();
       });
       return this;
   }
@@ -293,13 +329,13 @@ class Game extends WithState {
     super();
     this.width = width;
     this.height = height;
+    this.gameObjects ??= new Set();
     this.state = Object.create(null)
     this.init();
   }
 
   // 这个函数用于添加游戏对象
   addGameObject(gameObject) {
-    this.gameObjects ??= new Set();
     this.gameObjects.add(gameObject);
     gameObject.setGame(this);
     return this;
@@ -359,7 +395,7 @@ class Game extends WithState {
     if (!this.running) return;
     this.update();
     this.render();
-    requestAnimationFrame(this.gameLoop.bind(this));
+    this.rafTimer = requestAnimationFrame(this.gameLoop.bind(this));
     return this;
   }
 
@@ -395,9 +431,18 @@ class Game extends WithState {
     return this.playground;
   }
 
+  prepareToStart(fn) {
+    this.onStart = fn;
+    return this;
+  }
+
   // 开始运行
   start() {
-    requestAnimationFrame(this.gameLoop.bind(this));
+    this.stop();
+    if (typeof this.onStart === "function") {
+      this.onStart(this);
+    }
+    this.rafTimer = requestAnimationFrame(this.gameLoop.bind(this));
     this.setState("startTime", () => Date.now());
     this.running = true;
     return this;
@@ -405,42 +450,85 @@ class Game extends WithState {
 
   // 停止运行
   stop() {
+    cancelAnimationFrame(this.rafTimer)
     this.running = false;
     return this;
   }
 }
 
-
-
-// 创建一个角色
-new Character("OwO")
-// 将角色添加到游戏中
-.addToGame(
-  // 创建一个游戏
-  new Game({ width: 500, height: 500 })
-  .init().appendToDom(document.body)
-  // 为游戏添加逻辑
-  .setLogic(
-    (game) => {
-      const now = Date.now();
-      game.setState("lastFoodSpownTime", state => state.startTime);
-      game.setState("lastObstacleSpownTime", state => state.startTime);
-    
-      if (now - game.getState("lastFoodSpownTime") > 200) {
-        new Food()
-        .addToGame(game.setState("lastFoodSpownTime", () => now))
-        .spown();
-      }
-    
-      if (now - game.getState("lastObstacleSpownTime") > 1000) {
-        new Obstacle()
-        .addToGame(game.setState("lastObstacleSpownTime", () => now))
-        .spown();
-      }
+// 创建一个游戏
+new Game({ width: 500, height: 500 })
+.init().appendToDom(document.body)
+// 为游戏添加逻辑
+.setLogic(
+  (game) => {
+    const now = Date.now();
+    game.setStateIfNotExist("lastFoodSpownTime", state => state.startTime);
+    game.setStateIfNotExist("lastObstacleSpownTime", state => state.startTime);
+  
+    if (now - game.getState("lastFoodSpownTime") > 1000) {
+      new Food()
+      .addToGame(game.setState("lastFoodSpownTime", () => now))
+      .spown();
     }
-  )
+  
+    if (now - game.getState("lastObstacleSpownTime") > 5000) {
+      new Obstacle()
+      .addToGame(game.setState("lastObstacleSpownTime", () => now))
+      .spown();
+    }
+  }
 )
-// 添加到场景中
-.spown()
-// 开始游戏
-.getGame().start();
+// 准备开始
+.prepareToStart((game) => {
+  // 将角色添加到游戏中
+  game
+  .getGameObjects()
+  .forEach((gameObject) => {
+    game.removeGameObject(gameObject);
+  })
+
+  game
+  // 角色
+  .addGameObject(
+    new Character("OwO")
+  )
+  // 得分板
+  .addGameObject(
+    new NamedObject()
+    .moveTo(0, 500)
+    .setLogic(o => {
+      const game = o.getGame()
+      o.setName(
+        game.getGameObjects().filter(o => o.hasType("Character")).map(c => c.getState("point")).map(p => `得分：${p}`)[0]
+      )
+    })
+  )
+  // 名字
+  .addGameObject(
+    new NamedObject()
+    .moveTo(150, 500)
+    .setLogic(o => {
+      const game = o.getGame()
+      o.setName(
+        `已存活时间 ${((Date.now() - game.getState("startTime")) / 1000).toFixed(2)} 秒`
+      )
+    })
+  )
+  // 重新开始按钮
+  .addGameObject(
+    new NamedObject("重新开始")
+    .moveTo(400, 500)
+    .setLogic(o => {
+      const game = o.getGame()
+      o.onClick(() => {
+        game.start()
+      })
+    })
+  )
+  .getGameObjects()
+  .forEach((gameObject) => {
+    gameObject.spown();
+  })
+})
+.start();
