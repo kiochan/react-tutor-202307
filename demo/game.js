@@ -1,20 +1,20 @@
 class WithState {
   constructor() {
-    this.state = {}
+    this._state = {}
   }
 
   setState(name, setter) {
-    this.state[name] = setter(this.state);
+    this._state[name] = setter(this._state);
     return this;
   };
 
   setStateIfNotExist(name, setter) {
-    this.state[name] ??= setter(this.state);
+    this._state[name] ??= setter(this._state);
     return this;
   }
 
   getState(name) {
-    return this.state[name];
+    return this._state[name];
   }
 }
 
@@ -24,8 +24,8 @@ class GameObject extends WithState {
   constructor() {
     super();
     this.__type__ = [];
-    this.x = 0;
-    this.y = 0;
+    this._x = 0;
+    this._y = 0;
     this.setType("GameObject")
     this.createElement();
   }
@@ -37,7 +37,7 @@ class GameObject extends WithState {
   }
 
   getGame() {
-    return this.game;
+    return this._game;
   }
 
   delete() {
@@ -59,22 +59,22 @@ class GameObject extends WithState {
 
   // 这个函数用于创建游戏对象的元素
   createElement() {
-    this.el = document.createElement("span");
-    this.el.style.position = "absolute";
-    this.el.style.left = this.x + "px";
-    this.el.style.top = this.y + "px";
+    this._el = document.createElement("span");
+    this._el.style.position = "absolute";
+    this._el.style.left = this._x + "px";
+    this._el.style.top = this._y + "px";
     return this;
   }
 
   // 这个函数用于设置游戏对象的根元素
   setGame(game) {
-    this.game = game;
+    this._game = game;
     return this;
   }
 
   // 这个函数用于将游戏对象添加到游戏中
   spown() {
-    this.getGame().getDom().appendChild(this.el);
+    this.getGame().getDom().appendChild(this._el);
     return this;
   }
 
@@ -84,8 +84,8 @@ class GameObject extends WithState {
     if (game === undefined) return this;
     const root = game.getDom();
     if (root === undefined) return this;
-    if (root.contains(this.el)) {
-      root.removeChild(this.el);
+    if (root.contains(this._el)) {
+      root.removeChild(this._el);
     }
     return this;
   }
@@ -93,43 +93,43 @@ class GameObject extends WithState {
   // 这个函数用于获取游戏对象的位置
   getPosition() {
     return {
-      x: this.x,
-      y: this.y,
+      x: this._x,
+      y: this._y,
     };
   }
 
   // 这个函数用于设置游戏对象的位置
   moveTo(x, y) {
-    this.x = x;
-    this.y = y;
+    this._x = x;
+    this._y = y;
     return this;
   }
 
   // 这个函数用于设置游戏对象的逻辑
   setLogic(logicFc) {
-    this.logic = logicFc;
+    this._logic = logicFc;
     return this;
   }
 
   // 这个函数用于更新游戏对象的状态
   update() {
-    if (typeof this.logic === "function") {
-      this.logic(this);
+    if (typeof this._logic === "function") {
+      this._logic(this);
     }
     return this;
   }
 
   getSize() {
     return {
-      w: this.el.clientWidth,
-      h: this.el.clientHeight,
+      w: this._el.clientWidth,
+      h: this._el.clientHeight,
     };
   }
 
   // 这个函数用于更新游戏对象的状态
   render() {
-    this.el.style.left = this.x + "px";
-    this.el.style.top = this.y + "px";
+    this._el.style.left = this._x + "px";
+    this._el.style.top = this._y + "px";
     return this;
   }
 
@@ -142,13 +142,15 @@ class GameObject extends WithState {
     return x1 < x2 + w2 && x1 + w1 > x2 && y1 < y2 + h2 && y1 + h1 > y2;
   }
 
+  // 注册点击事件
   onClick(cb) {
-    this.el.addEventListener("click", cb)
+    this._el.addEventListener("click", cb)
     return this
   }
 
+  // 撤销点击事件
   offClick(cb) {
-    this.el.removeEventListener("click", cb)
+    this._el.removeEventListener("click", cb)
     return this
   }
 }
@@ -162,13 +164,13 @@ class NamedObject extends GameObject {
   }
 
   setFontSize(size) {
-    this.fontSize = size;
-    this.el.style.fontSize = size + "px";
+    this._fontSize = size;
+    this._el.style.fontSize = size + "px";
     return this;
   }
 
   getFontSize() {
-    return this.fontSize;
+    return this._fontSize;
   }
 
   createElement() {
@@ -178,19 +180,19 @@ class NamedObject extends GameObject {
   }
 
   setColor(fg = "#fff", bg = "#000") {
-    this.el.style.backgroundColor = bg;
-    this.el.style.color = fg;
+    this._el.style.backgroundColor = bg;
+    this._el.style.color = fg;
     return this;
   }
 
   setName(name) {
-    this.name = name;
-    this.el.innerText = this.name;
+    this._name = name;
+    this._el.innerText = this._name;
     return this;
   }
 
   getName() {
-    return this.name;
+    return this._name;
   }
 }
 
@@ -201,7 +203,7 @@ class Character extends NamedObject {
     super();
     this.setType("Character");
     this.setName(name);
-    this.speed = 5;
+    this._speed = 5;
     this.setState("point", () => 0);
     this.setState("alive", () => false);
   }
@@ -215,7 +217,7 @@ class Character extends NamedObject {
 
   update() {
     super.update();
-    const { speed } = this;
+    const { _speed: speed } = this;
     const game = this.getGame()
     const { width, height } = game;
     const { w, h } = this.getSize();
@@ -223,7 +225,7 @@ class Character extends NamedObject {
     const yMax = height - h;
     const keyMap = game.getKeyMap();
 
-    let { x, y } = this;
+    let { _x: x, _y: y } = this;
     let speedX = 0;
     let speedY = 0;
     if (keyMap.ArrowUp) speedY += -speed;
@@ -271,7 +273,9 @@ class RandomNamedObject extends NamedObject {
       this.moveTo(Math.random() * (width - w), Math.random() * (height - h));
       i++;
     } while (
-      i < 100 && game.getGameObjects().some((gameObject) =>
+      i < 100 && game.getGameObjects()
+      .filter(o => o !== this)
+      .some((gameObject) =>
       gameObject.isIntersectedWith(this)
       )
     );
@@ -327,16 +331,16 @@ class Game extends WithState {
   //  这个函数用于初始化游戏
   constructor({ width, height }) {
     super();
-    this.width = width;
-    this.height = height;
-    this.gameObjects ??= new Set();
-    this.state = Object.create(null)
+    this._width = width;
+    this._height = height;
+    this._gameObjects = new Set();
+    this._state = Object.create(null)
     this.init();
   }
 
   // 这个函数用于添加游戏对象
   addGameObject(gameObject) {
-    this.gameObjects.add(gameObject);
+    this._gameObjects.add(gameObject);
     gameObject.setGame(this);
     return this;
   }
@@ -344,19 +348,19 @@ class Game extends WithState {
   // 这个函数用于移除游戏对象
   removeGameObject(gameObject) {
     gameObject.disspown();
-    this.gameObjects.delete(gameObject);
+    this._gameObjects.delete(gameObject);
     gameObject.setGame(undefined);
     return this;
   }
 
   //获得游戏对象
   getGameObjects () {
-    return Array.from(this.gameObjects)
+    return Array.from(this._gameObjects)
   }
 
   // 这个函数负责更新游戏的状态
   render() {
-    for (const gameObject of this.gameObjects) {
+    for (const gameObject of this._gameObjects) {
       gameObject.render();
     }
     return this;
@@ -364,10 +368,10 @@ class Game extends WithState {
 
   // 这个函数负责更新游戏的逻辑
   update() {
-    if (typeof this.logic === "function") {
-      this.logic(this);
+    if (typeof this._logic === "function") {
+      this._logic(this);
     }
-    for (const gameObject of this.gameObjects) {
+    for (const gameObject of this._gameObjects) {
       gameObject.update();
     }
     return this;
@@ -375,9 +379,9 @@ class Game extends WithState {
 
   // 这个函数负责注册按键
   registerKeyEvent = () => {
-    this.key = {};
+    this._key = {};
     const register = (value) => (event) => {
-      this.key[event.key] = value;
+      this._key[event.key] = value;
     };
     document.addEventListener("keydown", register(true));
     document.addEventListener("keyup", register(false));
@@ -386,16 +390,16 @@ class Game extends WithState {
 
   // 获得按盘
   getKeyMap() {
-    return {...this.key}
+    return {...this._key}
   }
 
 
   // 这个函数负责游戏的主循环
   gameLoop() {
-    if (!this.running) return;
+    if (!this._running) return;
     this.update();
     this.render();
-    this.rafTimer = requestAnimationFrame(this.gameLoop.bind(this));
+    this._rafTimer = requestAnimationFrame(this.gameLoop.bind(this));
     return this;
   }
 
@@ -407,51 +411,51 @@ class Game extends WithState {
   }
 
   setLogic(logicFc) {
-    this.logic = logicFc
+    this._logic = logicFc
     return this;
   }
 
   // 初始化游戏场景
   initPlayground() {
-    this.playground = document.createElement("div");
-    this.playground.style.width = this.width + "px";
-    this.playground.style.height = this.height + "px";
-    this.playground.style.border = "1px solid black";
-    this.playground.style.position = "relative";
+    this._playground = document.createElement("div");
+    this._playground.style.width = this._width + "px";
+    this._playground.style.height = this._height + "px";
+    this._playground.style.border = "1px solid black";
+    this._playground.style.position = "relative";
     return this;
   }
 
   // 将游戏场景添加到DOM中
   appendToDom(el) {
-    el.appendChild(this.playground);
+    el.appendChild(this._playground);
     return this;
   }
 
   getDom() {
-    return this.playground;
+    return this._playground;
   }
 
   prepareToStart(fn) {
-    this.onStart = fn;
+    this._onStart = fn;
     return this;
   }
 
   // 开始运行
   start() {
     this.stop();
-    if (typeof this.onStart === "function") {
-      this.onStart(this);
+    if (typeof this._onStart === "function") {
+      this._onStart(this);
     }
-    this.rafTimer = requestAnimationFrame(this.gameLoop.bind(this));
+    this._rafTimer = requestAnimationFrame(this.gameLoop.bind(this));
     this.setState("startTime", () => Date.now());
-    this.running = true;
+    this._running = true;
     return this;
   }
 
   // 停止运行
   stop() {
-    cancelAnimationFrame(this.rafTimer)
-    this.running = false;
+    cancelAnimationFrame(this._rafTimer)
+    this._running = false;
     return this;
   }
 }
