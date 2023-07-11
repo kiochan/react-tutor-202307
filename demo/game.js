@@ -221,8 +221,9 @@ class Character extends NamedObject {
     const game = this.getGame()
     const { w, h } = this.getSize();
     const keyMap = game.getKeyMap();
-    const xMax = game.width - w
-    const yMax = game.height - h
+    const { width, height } = game.getPlaygroundSize()
+    const xMax = width - w
+    const yMax = height - h
 
     let { x, y } = this.getPosition();
     x += speed * (+Boolean(keyMap.ArrowRight) - Boolean(keyMap.ArrowLeft));
@@ -255,7 +256,7 @@ class RandomNamedObject extends NamedObject {
   spown() {
     super.spown();
     const game = this.getGame();
-    const { width, height } = game;
+    const { width, height } = game.getPlaygroundSize();
     const { w, h } = this.getSize();
     let i = 0;
     do {
@@ -326,6 +327,13 @@ class Game extends WithState {
     this._gameObjects = new Set();
     this._state = Object.create(null)
     this.init();
+  }
+
+  getPlaygroundSize() {
+    return {
+      width: this._width,
+      height: this._height
+    };
   }
 
   // 这个函数用于添加游戏对象
@@ -433,11 +441,11 @@ class Game extends WithState {
   // 开始运行
   start() {
     this.stop();
+    this.setState("startTime", () => Date.now());
     if (typeof this._onStart === "function") {
       this._onStart(this);
     }
     this._rafTimer = requestAnimationFrame(this.gameLoop.bind(this));
-    this.setState("startTime", () => Date.now());
     this._running = true;
     return this;
   }
