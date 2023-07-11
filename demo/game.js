@@ -504,7 +504,10 @@ new Game({ width: 500, height: 500 })
     .setLogic(o => {
       const game = o.getGame()
       o.setName(
-        game.getGameObjects().filter(o => o.hasType("Character")).map(c => c.getState("point")).map(p => `得分：${p}`)[0]
+        game.getGameObjects()
+        .filter(o => o.hasType("Character"))
+        .map(c => c.getState("point"))
+        .map(p => `得分：${p}`)[0]
       )
     })
   )
