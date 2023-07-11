@@ -52,13 +52,13 @@ class GameObject extends WithState {
 
   // 这个函数用于将游戏对象添加到游戏中
   spown() {
-    game.getDom().appendChild(this.el);
+    this.game.getDom().appendChild(this.el);
     return this;
   }
 
   // 这个函数用于将游戏对象从游戏中移除
   disspown() {
-    game.getDom().removeChild(this.el);
+    this.game.getDom().removeChild(this.el);
     return this;
   }
 
