@@ -219,27 +219,14 @@ class Character extends NamedObject {
     super.update();
     const { _speed: speed } = this;
     const game = this.getGame()
-    const { width, height } = game;
     const { w, h } = this.getSize();
-    const xMax = width - w;
-    const yMax = height - h;
     const keyMap = game.getKeyMap();
 
-    let { _x: x, _y: y } = this;
-    let speedX = 0;
-    let speedY = 0;
-    if (keyMap.ArrowUp) speedY += -speed;
-    if (keyMap.ArrowDown) speedY += speed;
-    if (keyMap.ArrowLeft) speedX += -speed;
-    if (keyMap.ArrowRight) speedX += speed;
-
-    x += speedX;
-    y += speedY;
-
-    if (x < 0) x = 0;
-    if (y < 0) y = 0;
-    if (x > xMax) x = xMax;
-    if (y > yMax) y = yMax;
+    let { x, y } = this.getPosition();
+    x += speed * (+Boolean(keyMap.ArrowRight) - Boolean(keyMap.ArrowLeft));
+    y += speed * (+Boolean(keyMap.ArrowDown) - Boolean(keyMap.ArrowUp));
+    if (x < 0) x = 0; if (x > xMax) x = game.width - w;
+    if (y < 0) y = 0; if (y > yMax) y = game.height - h;
 
     return this.moveTo(x, y);
   }
@@ -485,7 +472,7 @@ new Game({ width: 500, height: 500 })
 .prepareToStart((game) => {
   game.setStateIfNotExist("lastFoodSpownTime", state => state.startTime);
   game.setStateIfNotExist("lastObstacleSpownTime", state => state.startTime);
-  
+
   // 将角色添加到游戏中
   game
   .getGameObjects()
