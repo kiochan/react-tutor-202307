@@ -372,6 +372,7 @@ class Game extends WithState {
 
   setLogic(logicFc) {
     this.logic = logicFc
+    return this;
   }
 
   // 初始化游戏场景
