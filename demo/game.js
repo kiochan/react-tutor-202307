@@ -5,6 +5,7 @@ class WithState {
 
   setState(name, setter) {
     this.state[name] =  setter(this.state);
+    return this;
   };
 
   getState(name) {
@@ -26,6 +27,7 @@ class GameObject extends WithState {
   // 设置游戏对象类型
   setType(type) {
     this.__type__.push("GameObject");
+    return this;
   }
 
   // 检查类型是不是存在
@@ -39,21 +41,25 @@ class GameObject extends WithState {
     this.el.style.position = "absolute";
     this.el.style.left = this.x + "px";
     this.el.style.top = this.y + "px";
+    return this;
   }
 
   // 这个函数用于设置游戏对象的根元素
   setGame(game) {
     this.game = game;
+    return this;
   }
 
   // 这个函数用于将游戏对象添加到游戏中
   spown() {
     game.getDom().appendChild(this.el);
+    return this;
   }
 
   // 这个函数用于将游戏对象从游戏中移除
   disspown() {
     game.getDom().removeChild(this.el);
+    return this;
   }
 
   // 这个函数用于获取游戏对象的位置
@@ -68,11 +74,13 @@ class GameObject extends WithState {
   moveTo(x, y) {
     this.x = x;
     this.y = y;
+    return this;
   }
 
   // 这个函数用于设置游戏对象的逻辑
   setLogic(logicFc) {
     this.logic = logicFc;
+    return this;
   }
 
   // 这个函数用于更新游戏对象的状态
@@ -80,6 +88,7 @@ class GameObject extends WithState {
     if (typeof this.logic === "function") {
       this.logic(this);
     }
+    return this;
   }
 
   getSize() {
@@ -93,6 +102,7 @@ class GameObject extends WithState {
   render() {
     this.el.style.left = this.x + "px";
     this.el.style.top = this.y + "px";
+    return this;
   }
 
   // 判断相交
@@ -116,6 +126,7 @@ class NamedObject extends GameObject {
   setFontSize(size) {
     this.fontSize = size;
     this.el.style.fontSize = size + "px";
+    return this;
   }
 
   getFontSize() {
@@ -126,11 +137,13 @@ class NamedObject extends GameObject {
     super.createElement();
     this.el.style.backgroundColor = "#000";
     this.el.style.color = "#fff";
+    return this;
   }
 
   setName(name) {
     this.name = name;
     this.el.innerText = this.name;
+    return this;
   }
 
   getName() {
@@ -154,6 +167,7 @@ class Character extends NamedObject {
     super.spown();
     this.alive = true;
     this.el.style.backgroundColor = "#000";
+    return this;
   }
 
   update() {
@@ -181,11 +195,13 @@ class Character extends NamedObject {
     if (y > yMax) y = yMax;
 
     character.moveTo(x, y);
+    return this;
   }
 
   dead() {
     this.alive = false;
     this.el.style.backgroundColor = "#f00";
+    return this;
   }
 }
 
@@ -206,6 +222,7 @@ class RandomNamedObject extends NamedObject {
         this.isIntersectedWith(gameObject)
       )
     );
+    return this;
   }
 }
 
@@ -226,6 +243,7 @@ class Food extends RandomNamedObject {
         this.disspown();
         this.game.removeGameObject(this);
       });
+      return this;
   }
 }
 
@@ -246,6 +264,7 @@ class Obstacle extends RandomNamedObject {
         character.dead();
         this.game.stop();
       });
+      return this;
   }
 }
 
@@ -265,6 +284,7 @@ class Game extends WithState {
     this.gameObjects ??= new Set();
     this.gameObjects.add(gameObject);
     gameObject.setGame(this);
+    return this;
   }
 
   // 这个函数用于移除游戏对象
@@ -272,6 +292,7 @@ class Game extends WithState {
     gameObject.disspown();
     this.gameObjects.delete(gameObject);
     gameObject.setGame(undefined);
+    return this;
   }
 
   // 这个函数负责更新游戏的状态
@@ -279,6 +300,7 @@ class Game extends WithState {
     for (const gameObject of this.gameObjects) {
       gameObject.render();
     }
+    return this;
   }
 
   // 这个函数负责更新游戏的逻辑
@@ -286,6 +308,7 @@ class Game extends WithState {
     for (const gameObject of this.gameObjects) {
       gameObject.update();
     }
+    return this;
   }
 
   // 这个函数负责注册按键
@@ -296,6 +319,7 @@ class Game extends WithState {
     };
     document.addEventListener("keydown", register(true));
     document.addEventListener("keyup", register(false));
+    return this;
   };
 
   // 这个函数负责游戏的主循环
@@ -304,12 +328,14 @@ class Game extends WithState {
     this.update();
     this.render();
     requestAnimationFrame(this.gameLoop.bind(this));
+    return this;
   }
 
   // 初始化
   init() {
     this.registerKeyEvent();
     this.initPlayground();
+    return this;
   }
 
   // 初始化游戏场景
@@ -319,11 +345,13 @@ class Game extends WithState {
     this.playground.style.height = this.height + "px";
     this.playground.style.border = "1px solid black";
     this.playground.style.position = "relative";
+    return this;
   }
 
   // 将游戏场景添加到DOM中
   appendToDom(el) {
     el.appendChild(this.playground);
+    return this;
   }
 
   getDom() {
@@ -336,11 +364,13 @@ class Game extends WithState {
     requestAnimationFrame(this.gameLoop.bind(this));
     this.startTime = Date.now();
     this.running = true;
+    return this;
   }
 
   // 停止运行
   stop() {
     this.running = false;
+    return this;
   }
 }
 
