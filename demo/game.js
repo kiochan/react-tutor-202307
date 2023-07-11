@@ -517,8 +517,9 @@ new Game({ width: 500, height: 500 })
     .moveTo(150, 500)
     .setLogic(o => {
       const game = o.getGame()
+      const dt = (Date.now() - game.getState("startTime")) / 1000
       o.setName(
-        `已存活时间 ${((Date.now() - game.getState("startTime")) / 1000).toFixed(2)} 秒`
+        `已存活时间 ${dt.toFixed(2)} 秒`
       )
     })
   )
