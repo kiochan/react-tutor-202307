@@ -1,0 +1,12 @@
+{
+  "name": "kiochan",
+  "version": "0.0.0",
+  "description": "Demo code for my coder friends",
+  "scripts": {},
+  "author": {
+    "name": "Kiochan",
+    "email": "kio@kicohan.one",
+    "url": "https://kiochan.one"
+  },
+  "license": "MIT"
+}
