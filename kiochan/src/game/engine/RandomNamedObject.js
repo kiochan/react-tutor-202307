@@ -6,8 +6,8 @@ export class RandomNamedObject extends NamedObject {
     this.setType("RandomNamedObject");
   }
 
-  spown() {
-    super.spown();
+  spawn() {
+    super.spawn();
     const game = this.getGame();
     const { width, height } = game.getPlaygroundSize();
     const { w, h } = this.getSize();
