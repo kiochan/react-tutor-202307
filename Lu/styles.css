@@ -19,9 +19,9 @@ body {
 }
 
 div.war{
-  position: absolute;//設為絕對定位(absolute)
+  position: absolute;/*設為絕對定位(absolute)*/
   top: 0px;
-  right : 50px; //右邊上面都設0，則出現在右上方
+  right : 50px; /*右邊上面都設0，則出現在右上方*/
   height: 100px;
   margin-top:-8.7rem ;
 }
