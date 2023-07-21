@@ -1,5 +1,6 @@
 {
   "devDependencies": {
-    "@babel/plugin-proposal-object-rest-spread": "^7.20.7"
+    "@babel/plugin-proposal-object-rest-spread": "^7.20.7",
+    "@babel/preset-react": "^7.22.5"
   }
 }
