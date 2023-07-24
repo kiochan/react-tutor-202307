@@ -1,15 +1,15 @@
 import { PageId } from "../../setting";
-import { funtimepage } from "./funtimepage";
+import { FunTimePage } from "./funtime";
 import { HomePage } from "./home";
-import { inforpage } from "./inforpage";
-import { interestpage } from "./interestpage";
-import { photopage } from "./photopage";
+import { InforPage } from "./infor";
+import { interestpage } from "./interest";
+import { Photopage } from "./photo";
 
 
 export const PageComponents: Record<PageId, () => JSX.Element> = {
-    index:HomePage,
-    funtime:funtimepage,
-    infor:inforpage,
+    index: HomePage,
+    funtime: FunTimePage,
+    infor: InforPage,
     interest: interestpage,
-    photo:photopage 
+    photo: Photopage
 }
