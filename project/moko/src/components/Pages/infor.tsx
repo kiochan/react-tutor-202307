@@ -1,33 +1,7 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>妹红的详细说明</title>
-    <link rel="stylesheet" type="text/css" href="styles.css" />
-  </head>
+import React from "react";
 
-  <body>
-    <nav>
-      <h1>说明</h1>
-      <ul>
-        <li>
-          <a href="index.html">返回主页</a>
-        </li>
-        <li>
-          <a href="infor.html">说明页面</a>
-        </li>
-        <li>
-          <a href="photo.html">照片页面</a>
-        </li>
-        <li>
-          <a href="interest.html">兴趣页面</a>
-        </li>
-        <li>
-          <a href="funtime.html">勾搭页面</a>
-        </li>
-       
-      </ul>
-      </ul>
-    </nav>
+export const InforPage = () => {
+  return <>
     <p>大家好！我是FF14中的龙娘。在游戏中，我喜欢和其他猫娘、兔娘、龙娘以及其他可爱的人女女精们一起玩耍。我总是喜欢上线，跟大家亲亲搂搂抱抱，享受游戏中的友谊与互动。
 
       我喜欢与熟悉的朋友们建立深厚的联系，因此如果我们互相熟悉了，我会很高兴添加你为好友，这样我们下次再碰面的时候更加方便。我们可以一起探索游戏的世界，完成任务，挑战副本，或者只是闲聊分享彼此的游戏心得。
@@ -36,5 +10,5 @@
 
       期待能在FF14的世界里与你相遇，一起创造美好的回忆！
     </p>
-  </body>
-</html>
+  </>
+}

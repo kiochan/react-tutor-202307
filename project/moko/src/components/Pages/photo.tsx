@@ -1,6 +1,6 @@
 import React from "react";
 
-export const photopage= () =>{
+export const Photopage = () => {
     return <>
         <img src="images/今天的贴贴.png" /><br />
         <img src="images/夙愿酱.png" /><br />

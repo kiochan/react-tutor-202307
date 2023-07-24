@@ -1,4 +1,4 @@
-import React, { createElement } from "react";
+import React from "react";
 import { createRoot } from "react-dom/client";
 import { App } from "./components/App";
 
@@ -14,11 +14,11 @@ if (rootElement) {
 
   // 渲染 React 元素
   reactRoot.render(
-    <App/>
+    <App />
   )
-    // 下面的代码等价
+  // 下面的代码等价
   // <h1>Hello, world</h1>
-   
+
   // React.createElement(
   //   "h1",
   //   null,

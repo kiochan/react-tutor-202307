@@ -1,8 +1,8 @@
 import React from "react";
 
-export const funtimepage= () =>{
-    return <>
-        <ol>
+export const FunTimePage = () => {
+  return <>
+    <ol>
       <li>
         <h2>可爱的id</h2>
         首先，你需要比较可爱的id，不然妹红根本不会理你
@@ -17,5 +17,5 @@ export const funtimepage= () =>{
         给月妹红moko发送了一个小心心~
       </li>
     </ol>
-    </>
+  </>
 }
