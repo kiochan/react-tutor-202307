@@ -9,10 +9,17 @@
 
 body {
   background-color: #4682b3;
+  overflow-x: hidden;
+}
+
+div#root {
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow-x: hidden;
+}
+
+a {
+  cursor: pointer;
 }
 
 h1 {
