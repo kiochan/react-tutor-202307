@@ -2,7 +2,11 @@
   "name": "hotpot",
   "version": "1.0.0",
   "description": "another react project",
-  "scripts": {},
+  "scripts": {
+    "start": "http-server dist",
+    "dev": "webpack serve --config webpack.config.js --mode development",
+    "build": "webpack --config webpack.config.js --mode production"
+  },
   "author": {
     "name": "DurdaeEstel",
     "email": "durdaeestel@gmail.com",
