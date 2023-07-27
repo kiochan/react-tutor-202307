@@ -1,0 +1,194 @@
+* {
+  margin: 0;
+  padding: 0.8rem 0rem;
+  font-family: "Microsoft YaHei", sans-serif;
+  color: #fff;
+  box-sizing: border-box;
+  text-decoration:none;
+}
+
+body {
+  background-color: rgba(0,0,0,0.75);
+  flex-direction: column;
+  align-items: center;
+  overflow-x: hidden;
+  background-image: url("./img/9.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+  background-blend-mode: multiply;
+}
+
+div.war{
+  position: absolute;//設為絕對定位(absolute)
+  top: 0px;
+  right : 50px; //右邊上面都設0，則出現在右上方
+  height: 100px;
+  margin-top:-8.7rem ;
+}
+
+
+h1 {
+  font-size: 1.8rem;
+  justify-content: center;
+  padding: 0.65rem 0rem;
+}
+
+
+
+
+
+nav {
+  letter-spacing:0.3px;
+  width: 100vw; /* vw = view width */
+  background: linear-gradient(to right, rgba(19, 69, 134, 0.767), rgba(22, 22, 22, 0.322));
+  padding: 0rem 4rem;
+  font-size: 1.8rem;
+  justify-content:center;
+  align-items: center;
+  filter: drop-shadow(0 0 0.75rem #000);
+  
+}
+
+nav h1 {
+  color: #ffffff81;
+}
+
+p.redbox{ 
+  background: repeating-linear-gradient(-45deg, rgba(255, 0, 55, 0.116),rgba(255, 0, 55, 0.116) 18px, rgba(255, 0, 55, 0.25) 18px, rgba(2255, 0, 55, 0.25) 36px);
+
+  padding: 2rem 2.5rem;
+  margin: 2rem 6rem;
+  border-radius: 0.5rem;
+}
+
+h3:not(.step){
+  margin-left: 6rem;
+  font-size: 1.8rem;
+}
+
+
+
+nav ul {
+  display: flex;
+  margin-left: 0rem;
+}
+
+nav ul li {
+  display: flex;
+  list-style: none;
+  padding-left: 0rem;
+  margin-right: 2rem;
+  margin-left: 2rem;
+  box-sizing: border-box;
+}
+
+h2 {
+  margin-left: 6rem;
+  margin-top: 2.5rem;
+  font-size: 2.5rem;
+  display: flex;
+}
+
+a:hover{
+  color: #4db7f5;
+}
+p {
+  letter-spacing:0.3rem;
+  line-height:1.8rem;
+  font-size: 1.3rem;
+  padding: 2rem 2.5rem;
+  margin: 2rem 6rem;
+  border-radius: 0.5rem;
+
+}
+
+p:not(.hl,.sum,.redbox,.step){
+  background: repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.116),rgba(255, 255, 255, 0.116) 18px, rgba(255, 255, 255, 0.25) 18px, rgba(255, 255, 255, 0.25) 36px);
+}
+
+p.sum{
+  font-size: 1rem;
+}
+p.hl {
+  font-size: 2.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 4rem;
+}
+
+div.link{
+  margin-top:3rem;
+  padding:1rem;
+  font-size: 2rem;
+  display: flex;
+  justify-content:center;
+  align-items: center;
+}
+
+div.link ul {
+  display: flex;
+}
+
+div.link ul li{
+  display: flex;
+  list-style: none;
+  margin-right: 2rem;
+  margin-left: 2rem;
+  justify-content:center;
+  align-items: center;
+  box-sizing: border-box;
+  white-space: pre;
+}
+
+ul{
+  font-size:1.3rem;
+  list-style: none;
+  margin-left: 6rem;
+  box-sizing: border-box;
+}
+
+ul li {
+  display: flex;
+  list-style: none;
+  box-sizing: border-box;
+}
+
+
+
+img {
+  width: 100%;
+  max-width: 1000px;
+  margin-left: 6rem;
+  border-radius: 1.5rem;
+  filter: drop-shadow(0 0 0.75rem #000);
+}
+
+div.war img{  width: 100%;
+  max-width: 120px;
+  margin-left: 6rem;
+  border-radius: 1.5rem;
+  filter: drop-shadow(0 0 0.75rem #000);
+  opacity:0.5;
+
+}
+
+ol {
+  background: repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.116),rgba(255, 255, 255, 0.116) 18px, rgba(255, 255, 255, 0.25) 18px, rgba(255, 255, 255, 0.25) 36px);
+  padding-left:3.5rem;
+  margin: 2rem 6rem;
+  border-radius: 0.5rem;
+}
+
+ol li{
+  text-align:left;
+  border-radius: 0.5rem;
+}
+
+ol li h3.step{
+  font-size: 1.8rem;
+  text-align:left;
+}
+
+p.step{
+  margin: 0;
+  padding-left:0 ;
+}
