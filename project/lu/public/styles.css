@@ -19,9 +19,9 @@ body {
 }
 
 div.war{
-  position: absolute;//設為絕對定位(absolute)
+  position: absolute;
   top: 0px;
-  right : 50px; //右邊上面都設0，則出現在右上方
+  right : 50px; 
   height: 100px;
   margin-top:-8.7rem ;
 }
@@ -30,7 +30,7 @@ div.war{
 h1 {
   font-size: 1.8rem;
   justify-content: center;
-  padding: 0.65rem 0rem;
+  padding: 1.2rem 1rem;
 }
 
 
