@@ -1,15 +1,18 @@
-import React, { useState } from "react"
+import React from "react"
 import { Nav } from "./Nav"
 import { PageComponents } from "./pages"
-import { PageId } from "../settings"
+import { returnDefaultIfNotInPages } from "./utils/returnDefaultIfNotInPages"
+import { useRouter } from "../hooks/useRouter"
 
 export const App = () => {
-    const [pageId, setPageId] = useState<PageId>("home")
+    const [hash, setHash] = useRouter() // side effect 副作用
+
+    const pageId = returnDefaultIfNotInPages(hash)
 
     const PageComponent = PageComponents[pageId]
 
     return <>
-        <Nav pageId={pageId} onPageChange={setPageId}></Nav>
+        <Nav pageId={pageId} onPageChange={setHash}></Nav>
         <PageComponent />
     </>
 }

@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Fragment } from "react"
 
 export const ImagesPage = () => {
 
@@ -6,10 +6,10 @@ export const ImagesPage = () => {
 
     return <>
         {ids.map((n) =>
-            <>
-                <img key={n} src={`images/${n}.png`} />
-                <br key={String(n) + 'br'} />
-            </>
+            <Fragment key={n} >
+                <img src={`images/${n}.png`} />
+                <br />
+            </Fragment>
         )}
     </>
 }

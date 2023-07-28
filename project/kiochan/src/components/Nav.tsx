@@ -23,14 +23,14 @@ export const Nav = (props: NavProps) => {
                     .map((pageId) => {
                         const { name } = settings.pages[pageId]
                         if (props.pageId === pageId) {
-                            return <li>
+                            return <li key={pageId}>
                                 <strong>
                                     <a onClick={() => props.onPageChange(pageId)}>{name}</a>
                                 </strong>
                             </li>
                         } else {
 
-                            return <li>
+                            return <li key={pageId}>
                                 <a onClick={() => props.onPageChange(pageId)}>{name}</a>
                             </li>
                         }
