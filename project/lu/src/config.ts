@@ -1,5 +1,4 @@
-export const settings = {
-  pages: {
+export const settings = {  pages: {
     page1: {
       title: "一个高难人的自言自语",
       h1: "个人主页",
@@ -29,4 +28,5 @@ export const settings = {
 };
 
 export type PageId = keyof typeof settings.pages;
-export const allPages = Object.keys(settings.pages) as PageId[];
+export const pageNamesArray = Object.keys(settings.pages) as PageId[];
+export const allPages = pageNamesArray;

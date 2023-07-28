@@ -8,7 +8,7 @@ export interface NavProps {
 }
 
 export const Nav = (props: NavProps) => {
-    const { name, title, h1 } = settings.pages[props.pageId]
+    const { title } = settings.pages[props.pageId]
 
     useEffect(() => {
         document.title = title;
@@ -17,20 +17,20 @@ export const Nav = (props: NavProps) => {
     return <nav>
         <ul>
             {
-                
+
                 allPages
                     .map((pageId) => {
                         const { name } = settings.pages[pageId]
-                        if (props.pageId === pageId){
+                        if (props.pageId === pageId) {
                             return <h1>{name}</h1>
 
-                        }else{
+                        } else {
                             return <li key={pageId}>
-                            <a onClick={() => props.onPageChange(pageId)}>{name}</a>
-                        </li>
+                                <a onClick={() => props.onPageChange(pageId)}>{name}</a>
+                            </li>
 
                         }
-                        
+
                     })
 
             }
