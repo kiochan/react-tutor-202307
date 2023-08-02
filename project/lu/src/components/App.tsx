@@ -2,30 +2,37 @@ import React, { useEffect, useState } from "react"
 import { Nav } from "./Nav"
 import { pageNamesArray } from "../config"
 import { pages } from "../pages"
-import { settings, allPages, PageId} from "../config"
+import { settings, allPages, PageId } from "../config"
 
 
 export const App = () => {
     let pageIdDefault: PageId = window.location.hash.replace(/^#/, '') as PageId
-    if ( !allPages.includes( pageIdDefault)){
+
+    if (!allPages.includes(pageIdDefault)) {
         pageIdDefault = allPages[0]
     }
-    
-    const [pageIndex, setPageIndex] = useState<number>(0)
+
+    const [pageIndex, setPageIndex] = useState<number>(allPages.indexOf(pageIdDefault))
     const pageId = pageNamesArray[pageIndex]
 
-    useEffect (() => {
-        window.addEventListener("popstate", function(e){
-            let pageIdDefault: PageId = window.location.hash as PageId
-            if ( !allPages.includes( pageIdDefault as PageId)){
+    useEffect(() => {
+        const listener = function (e: PopStateEvent) {
+            let pageIdDefault: PageId = window.location.hash.replace(/^#/, '') as PageId
+            if (!allPages.includes(pageIdDefault as PageId)) {
                 pageIdDefault = allPages[0]
             }
-        }, false);
-    },[pageId])
+            setPageIndex(allPages.indexOf(pageIdDefault))
+        }
+        window.addEventListener("popstate", listener, false);
 
-    useEffect (() => {
+        return () => {
+            window.removeEventListener("popstate", listener)
+        }
+    }, [])
+
+    useEffect(() => {
         window.location.hash = pageId
-    },[pageId])
+    }, [pageId])
 
     const indexBefore = (pageIndex - 1 + pageNamesArray.length) % pageNamesArray.length
     const indexAfter = (pageIndex + 1) % pageNamesArray.length
