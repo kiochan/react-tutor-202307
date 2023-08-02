@@ -1,38 +1,15 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 import { Nav } from "./Nav"
 import { pageNamesArray } from "../config"
 import { pages } from "../pages"
-import { settings, allPages, PageId } from "../config"
+import { settings } from "../config"
+import { usePageIndex } from "../hooks/usePageIndex"
 
 
 export const App = () => {
-    let pageIdDefault: PageId = window.location.hash.replace(/^#/, '') as PageId
+    const [pageIndex, setPageIndex] = usePageIndex()
 
-    if (!allPages.includes(pageIdDefault)) {
-        pageIdDefault = allPages[0]
-    }
-
-    const [pageIndex, setPageIndex] = useState<number>(allPages.indexOf(pageIdDefault))
-    const pageId = pageNamesArray[pageIndex]
-
-    useEffect(() => {
-        const listener = function (e: PopStateEvent) {
-            let pageIdDefault: PageId = window.location.hash.replace(/^#/, '') as PageId
-            if (!allPages.includes(pageIdDefault as PageId)) {
-                pageIdDefault = allPages[0]
-            }
-            setPageIndex(allPages.indexOf(pageIdDefault))
-        }
-        window.addEventListener("popstate", listener, false);
-
-        return () => {
-            window.removeEventListener("popstate", listener)
-        }
-    }, [])
-
-    useEffect(() => {
-        window.location.hash = pageId
-    }, [pageId])
+    const pageId = pageNamesArray[pageIndex];
 
     const indexBefore = (pageIndex - 1 + pageNamesArray.length) % pageNamesArray.length
     const indexAfter = (pageIndex + 1) % pageNamesArray.length
