@@ -130,3 +130,18 @@ strong a {
   font-weight: bold;
   text-decoration: underline;
 }
+
+div.counter {
+  background-color: #121924;
+  padding: 2rem;
+  margin: 2rem;
+}
+
+div.counter span {
+  margin: 1rem;
+}
+
+div.counter button {
+  background-color: #121924;
+  margin: 1rem;
+}

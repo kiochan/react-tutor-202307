@@ -1,4 +1,5 @@
 import { PageId } from "../../settings";
+import { ComponentDemoPage } from "./ComponentDemoPage";
 import { DetailsPage } from "./DetailsPage";
 import { HomePage } from "./HomePage";
 import { ImagesPage } from "./ImagesPage";
@@ -9,4 +10,5 @@ export const PageComponents: Record<PageId, () => JSX.Element> = {
     images: ImagesPage,
     details: DetailsPage,
     reason: ReasonPage,
+    demo: ComponentDemoPage,
 }

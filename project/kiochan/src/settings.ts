@@ -19,6 +19,10 @@ export const settings = {
       title: "喜欢猫娘的原因",
       name: "原因",
     },
+    demo: {
+      title: "演示",
+      name: "演示",
+    },
   },
 };
 
