@@ -1,13 +1,31 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Nav } from "./Nav"
 import { pageNamesArray } from "../config"
 import { pages } from "../pages"
-import { settings } from "../config"
+import { settings, allPages, PageId} from "../config"
 
 
 export const App = () => {
+    let pageIdDefault: PageId = window.location.hash.replace(/^#/, '') as PageId
+    if ( !allPages.includes( pageIdDefault)){
+        pageIdDefault = allPages[0]
+    }
+    
     const [pageIndex, setPageIndex] = useState<number>(0)
     const pageId = pageNamesArray[pageIndex]
+
+    useEffect (() => {
+        window.addEventListener("popstate", function(e){
+            let pageIdDefault: PageId = window.location.hash as PageId
+            if ( !allPages.includes( pageIdDefault as PageId)){
+                pageIdDefault = allPages[0]
+            }
+        }, false);
+    },[pageId])
+
+    useEffect (() => {
+        window.location.hash = pageId
+    },[pageId])
 
     const indexBefore = (pageIndex - 1 + pageNamesArray.length) % pageNamesArray.length
     const indexAfter = (pageIndex + 1) % pageNamesArray.length
