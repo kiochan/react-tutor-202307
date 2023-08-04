@@ -145,3 +145,39 @@ div.counter button {
   background-color: #121924;
   margin: 1rem;
 }
+
+div.calc {
+  padding: 2rem;
+}
+
+div.calc div.display,
+div.calc button {
+  font-family: "Microsoft YaHei", sans-serif;
+  display: inline-block;
+  width: 4rem;
+  height: 2rem;
+  background-color: #121924;
+  margin: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #fff;
+  padding: 0;
+  align-items: flex-start;
+  transition: all 0.2s ease-in-out;
+}
+
+div.calc div.display {
+  width: 22rem;
+  height: 3rem;
+  font-size: 1.5rem;
+  text-align: right;
+  padding: 0.5rem 1rem;
+}
+
+.invisible {
+  opacity: 0;
+}
+
+div.calc button:active {
+  background-color: #fff;
+  color: #121924;
+}

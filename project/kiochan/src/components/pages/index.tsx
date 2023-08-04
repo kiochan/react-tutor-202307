@@ -1,4 +1,5 @@
 import { PageId } from "../../settings";
+import { CalculatorPage } from "./CalculatorPage";
 import { ComponentDemoPage } from "./ComponentDemoPage";
 import { DetailsPage } from "./DetailsPage";
 import { HomePage } from "./HomePage";
@@ -11,4 +12,5 @@ export const PageComponents: Record<PageId, () => JSX.Element> = {
     details: DetailsPage,
     reason: ReasonPage,
     demo: ComponentDemoPage,
+    calculator: CalculatorPage
 }

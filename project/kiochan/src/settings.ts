@@ -23,6 +23,10 @@ export const settings = {
       title: "演示",
       name: "演示",
     },
+    calculator: {
+      title: "计算器",
+      name: "计算器",
+    },
   },
 };
 
