@@ -7,6 +7,7 @@
   text-decoration:none;
 }
 
+
 body {
   background-color: rgba(0,0,0,0.75);
   flex-direction: column;
@@ -18,13 +19,16 @@ body {
   background-blend-mode: multiply;
 }
 
+
 div.war{
   position: absolute;
   top: 0px;
-  right : 50px; 
+  right : 50px;
   height: 100px;
   margin-top:-8.7rem ;
 }
+
+
 
 
 h1 {
@@ -32,6 +36,11 @@ h1 {
   justify-content: center;
   padding: 1.2rem 1rem;
 }
+
+
+
+
+
 
 
 
@@ -46,20 +55,24 @@ nav {
   justify-content:center;
   align-items: center;
   filter: drop-shadow(0 0 0.75rem #000);
-  
+ 
 }
+
 
 nav h1 {
   color: #ffffff81;
 }
 
-p.redbox{ 
+
+p.redbox{
   background: repeating-linear-gradient(-45deg, rgba(255, 0, 55, 0.116),rgba(255, 0, 55, 0.116) 18px, rgba(255, 0, 55, 0.25) 18px, rgba(2255, 0, 55, 0.25) 36px);
+
 
   padding: 2rem 2.5rem;
   margin: 2rem 6rem;
   border-radius: 0.5rem;
 }
+
 
 h3:not(.step){
   margin-left: 6rem;
@@ -68,10 +81,14 @@ h3:not(.step){
 
 
 
+
+
+
 nav ul {
   display: flex;
   margin-left: 0rem;
 }
+
 
 nav ul li {
   display: flex;
@@ -82,12 +99,14 @@ nav ul li {
   box-sizing: border-box;
 }
 
+
 h2 {
   margin-left: 6rem;
   margin-top: 2.5rem;
   font-size: 2.5rem;
   display: flex;
 }
+
 
 a:hover{
   color: #4db7f5;
@@ -100,11 +119,14 @@ p {
   margin: 2rem 6rem;
   border-radius: 0.5rem;
 
+
 }
+
 
 p:not(.hl,.sum,.redbox,.step){
   background: repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.116),rgba(255, 255, 255, 0.116) 18px, rgba(255, 255, 255, 0.25) 18px, rgba(255, 255, 255, 0.25) 36px);
 }
+
 
 p.sum{
   font-size: 1rem;
@@ -115,6 +137,7 @@ p.hl {
   margin-bottom: 4rem;
 }
 
+
 div.link{
   margin-top:3rem;
   padding:1rem;
@@ -124,9 +147,11 @@ div.link{
   align-items: center;
 }
 
+
 div.link ul {
   display: flex;
 }
+
 
 div.link ul li{
   display: flex;
@@ -136,21 +161,24 @@ div.link ul li{
   justify-content:center;
   align-items: center;
   box-sizing: border-box;
-  white-space: pre;
 }
+
 
 ul{
   font-size:1.3rem;
   list-style: none;
-  margin-left: 6rem;
   box-sizing: border-box;
 }
+
 
 ul li {
   display: flex;
   list-style: none;
   box-sizing: border-box;
 }
+
+
+
 
 
 
@@ -162,6 +190,7 @@ img {
   filter: drop-shadow(0 0 0.75rem #000);
 }
 
+
 div.war img{  width: 100%;
   max-width: 120px;
   margin-left: 6rem;
@@ -169,7 +198,9 @@ div.war img{  width: 100%;
   filter: drop-shadow(0 0 0.75rem #000);
   opacity:0.5;
 
+
 }
+
 
 ol {
   background: repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.116),rgba(255, 255, 255, 0.116) 18px, rgba(255, 255, 255, 0.25) 18px, rgba(255, 255, 255, 0.25) 36px);
@@ -178,17 +209,112 @@ ol {
   border-radius: 0.5rem;
 }
 
+
 ol li{
   text-align:left;
   border-radius: 0.5rem;
 }
+
 
 ol li h3.step{
   font-size: 1.8rem;
   text-align:left;
 }
 
+
 p.step{
   margin: 0;
   padding-left:0 ;
 }
+
+
+div.display{
+  margin: 1rem 1rem;
+  font-size: 28px;
+}
+
+
+div.calc {
+  background: #000;
+  margin-left: rem;
+  height: 31rem;
+  width: 20rem;
+  border: 1rem solid #000;
+  border-radius: 2rem;
+  text-align: right;
+  justify-content: center;
+  margin: 5% 41.5%;
+
+
+  padding: 0 0;
+}
+
+
+div.calc button{
+  color:#fff;
+  background: #313131;
+  border: 0.1875em solid #000;
+  border-radius: 50%;
+  height: 2.5em;
+  width:2.5em;
+  font-size: 28px;
+  text-align: center;
+}
+
+
+div.buttons2, div.buttons1{
+  padding: 0.1rem 0.1rem;
+}
+div.buttons1 button{
+
+
+  color:#000;
+  background: #8f8f8f;
+  border: 0.1875em solid #000;
+  border-radius: 50%;
+  height: 2.5em;
+  width:2.5em;
+  font-size: 28px;
+  text-align: center;
+}
+
+
+div.buttons1 button:nth-child(4) {
+
+
+  color:#fff;
+  background: #fd8c22;
+  border: 0.1875em solid #000;
+  border-radius: 50%;
+  height: 2.5em;
+  width:2.5em;
+  font-size: 28px;
+  text-align: center;
+}
+
+
+
+
+
+
+
+
+div.buttons2 button:nth-child(4) {
+
+
+  color:#fff;
+  background: #fd8c22;
+  border: 0.1875em solid #000;
+  border-radius: 50%;
+  height: 2.5em;
+  width:2.5em;
+  font-size: 28px;
+  text-align: center;
+}
+
+
+
+
+
+
+
