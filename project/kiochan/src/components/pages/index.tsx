@@ -4,6 +4,7 @@ import { ComponentDemoPage } from "./ComponentDemoPage";
 import { DetailsPage } from "./DetailsPage";
 import { HomePage } from "./HomePage";
 import { ImagesPage } from "./ImagesPage";
+import { NotFoundPage } from "./NotFoundPage";
 import { ReasonPage } from "./ReasonPage";
 
 export const PageComponents: Record<PageId, () => JSX.Element> = {
@@ -12,5 +13,6 @@ export const PageComponents: Record<PageId, () => JSX.Element> = {
     details: DetailsPage,
     reason: ReasonPage,
     demo: ComponentDemoPage,
-    calculator: CalculatorPage
+    calculator: CalculatorPage,
+    '404': NotFoundPage
 }

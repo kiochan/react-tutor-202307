@@ -3,16 +3,21 @@ import { Nav } from "./Nav"
 import { PageComponents } from "./pages"
 import { returnDefaultIfNotInPages } from "./utils/returnDefaultIfNotInPages"
 import { useRouter } from "../hooks/useRouter"
+import { PageId } from "../settings"
 
-export const App = () => {
-    const [hash, setHash] = useRouter() // side effect 副作用
+interface AppProps {
+    defaultPageId?: string
+}
 
-    const pageId = returnDefaultIfNotInPages(hash)
+export const App = (props: AppProps) => {
+    const [path, setPath] = useRouter(props.defaultPageId) // side effect 副作用
+
+    const pageId = returnDefaultIfNotInPages(path)
 
     const PageComponent = PageComponents[pageId]
 
     return <>
-        <Nav pageId={pageId} onPageChange={setHash}></Nav>
+        <Nav pageId={pageId} onPageChange={setPath as (pageId: PageId) => void}></Nav>
         <PageComponent />
     </>
 }

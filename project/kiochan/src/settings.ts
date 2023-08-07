@@ -27,8 +27,14 @@ export const settings = {
       title: "计算器",
       name: "计算器",
     },
+    "404": {
+      title: "找不到该页面",
+      name: "找不到该页面",
+    },
   },
 };
+
+export const pages404 = settings.pages["404"];
 
 export type PageId = keyof typeof settings.pages;
 export const allPages = Object.keys(settings.pages) as PageId[];

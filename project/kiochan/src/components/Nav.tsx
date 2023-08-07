@@ -20,6 +20,7 @@ export const Nav = (props: NavProps) => {
         <ul>
             {
                 allPages
+                    .filter((pageId) => pageId !== '404')
                     .map((pageId) => {
                         const { name } = settings.pages[pageId]
                         if (props.pageId === pageId) {
