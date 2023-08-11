@@ -1,4 +1,5 @@
 import { PageId } from "../../setting";
+import { Calculatorpage } from "./calculater";
 import { FunTimePage } from "./funtime";
 import { HomePage } from "./home";
 import { InforPage } from "./infor";
@@ -11,5 +12,6 @@ export const PageComponents: Record<PageId, () => JSX.Element> = {
     funtime: FunTimePage,
     infor: InforPage,
     interest: interestpage,
-    photo: Photopage
+    photo: Photopage,
+    calculator:Calculatorpage
 }

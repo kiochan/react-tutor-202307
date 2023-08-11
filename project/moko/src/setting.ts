@@ -23,6 +23,10 @@ export const settings = {
       title: "妹红的爱好",
       name: "兴趣",
     },
+    calculator:{
+      title:"计算器",
+      name:"计算器"
+    }
   },
 };
 
