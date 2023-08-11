@@ -229,8 +229,8 @@ p.step{
 
 
 div.display{
-  margin: 1rem 1rem;
-  font-size: 28px;
+  margin: 0rem 1rem;
+  font-size: 60px;
 }
 
 
@@ -244,8 +244,6 @@ div.calc {
   text-align: right;
   justify-content: center;
   margin: 5% 41.5%;
-
-
   padding: 0 0;
 }
 
@@ -259,15 +257,18 @@ div.calc button{
   width:2.5em;
   font-size: 28px;
   text-align: center;
+  justify-content: center;
+  
 }
 
 
-div.buttons2, div.buttons1{
-  padding: 0.1rem 0.1rem;
+div.buttons1 ,div.buttons2 ,div.buttons3  {
+
+  padding: 0rem 0rem;
 }
+
+
 div.buttons1 button{
-
-
   color:#000;
   background: #8f8f8f;
   border: 0.1875em solid #000;
@@ -276,6 +277,8 @@ div.buttons1 button{
   width:2.5em;
   font-size: 28px;
   text-align: center;
+  justify-content: center;
+  padding: 0.1rem 0.1rem;
 }
 
 
@@ -290,14 +293,8 @@ div.buttons1 button:nth-child(4) {
   width:2.5em;
   font-size: 28px;
   text-align: center;
+  justify-content: center;
 }
-
-
-
-
-
-
-
 
 div.buttons2 button:nth-child(4) {
 
@@ -310,11 +307,38 @@ div.buttons2 button:nth-child(4) {
   width:2.5em;
   font-size: 28px;
   text-align: center;
+  justify-content: center;
 }
 
+div.buttons3 button:nth-child(1) {
+  color:#fff;
+  background: #313131;
+  border: 0.1875em solid #000;
+  border-radius: 35px;
+  height: 2.5em;
+  width:5em;
+  font-size: 28px;
+  padding-left: 1.5rem;
+  text-align: left;
+  justify-content: center;
+}
+
+div.buttons3 button:nth-child(3) {
 
 
+  color:#fff;
+  background: #fd8c22;
+  border: 0.1875em solid #000;
+  border-radius: 50%;
+  height: 2.5em;
+  width:2.5em;
+  font-size: 28px;
+  text-align: center;
+  justify-content: center;
+}
 
-
+div.calc button:active {
+  opacity: 30%;
+}
 
 
