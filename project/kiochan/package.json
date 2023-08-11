@@ -4,10 +4,7 @@
   "version": "0.0.0",
   "description": "Demo code for my coder friends",
   "scripts": {
-    "start": "http-server dist",
-    "dev": "webpack serve --config webpack.config.js --mode development",
-    "build": "webpack --config webpack.config.js --mode production",
-    "be": "ts-node src/backend/index.ts"
+    "start": "ts-node src/backend/index.ts"
   },
   "author": {
     "name": "Kiochan",

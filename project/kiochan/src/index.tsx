@@ -1,11 +1,9 @@
 import React from "react";
-import { hydrateRoot } from "react-dom/client";
 import { App } from "./components/App";
+import { createRoot } from "react-dom/client";
 
 // 获得根 Dom 节点
-const rootElement = document.getElementById("root");
+const rootElement = document.getElementById("root")!;
 
-if (rootElement) {
-  // 创建 React 渲染根节点
-  hydrateRoot(rootElement, <App />);
-}
+// 渲染根组件
+createRoot(rootElement).render(<App />);

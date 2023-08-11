@@ -1,6 +1,6 @@
 import React from "react"
-import { Calculator } from "../Calculator/Calculator"
+import { CalculatorComponent } from "../Calculator/CalculatorComponent"
 
 export const CalculatorPage = () => {
-    return <Calculator />
+    return <CalculatorComponent />
 }
