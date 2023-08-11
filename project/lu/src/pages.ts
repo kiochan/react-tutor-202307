@@ -3,6 +3,8 @@ import { SelfIntroductionPage } from "./components/pages/SelfIntroductionPage";
 import { PhotoPage } from "./components/pages/PhotoPage";
 import { HobbiesPage } from "./components/pages/HobbiesPage";
 import { ContactInfPage } from "./components/pages/ContactInfPage";
+import { CalculatorPage } from "./components/pages/CalculatorPage";
+
 
 export const pages = {
   Home: HomePage,
@@ -10,4 +12,8 @@ export const pages = {
   Photo: PhotoPage,
   Hobbies: HobbiesPage,
   ContactInf: ContactInfPage,
+  Calculator: CalculatorPage
 };
+
+
+
