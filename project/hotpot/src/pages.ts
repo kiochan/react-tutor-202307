@@ -1,4 +1,5 @@
 import { IndexPage } from "./components/pages";
+import { Calculator } from "./components/pages/calculator";
 import { HotpotPage } from "./components/pages/hotpot";
 import { LovePage } from "./components/pages/love";
 import { Page2Page } from "./components/pages/page2";
@@ -10,4 +11,5 @@ export const pages = {
   hotpot: HotpotPage,
   table: TablePage,
   love: LovePage,
+  calc: Calculator,
 };

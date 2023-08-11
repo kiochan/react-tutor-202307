@@ -158,3 +158,25 @@ ul.love li {
   border: 1px solid #fff;
   border-radius: 0.5rem;
 }
+
+.calc button {
+  background: #293047;
+  filter: drop-shadow(0 0 0.2rem #000);
+  border-radius: 0.5em;
+  font-size: 2rem;
+  margin: 0.2rem;
+  padding: 0.5rem 1rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.calc button:hover {
+  background: #fff;
+  color: #293047;
+  cursor: pointer;
+}
+
+.calc button:active {
+  filter: drop-shadow(0 0 0.1rem #000);
+  background: #eee;
+  color: #293047;
+}

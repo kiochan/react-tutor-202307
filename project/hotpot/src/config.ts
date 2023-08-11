@@ -25,6 +25,11 @@ export const settings = {
       h1: "火锅风味",
       name: "爽锅",
     },
+    calc: {
+      title: "火锅计算器",
+      h1: "火锅计算器",
+      name: "计算器",
+    },
   },
 };
 
