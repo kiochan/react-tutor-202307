@@ -1,7 +1,7 @@
 import React from "react"
 
-const buttons1 =[
-    ['AC','+/-','%','/'],
+const buttons1 = [
+    ['AC', '+/-', '%', '/'],
 ]
 
 const buttons2 = [
@@ -11,38 +11,38 @@ const buttons2 = [
 ]
 
 const buttons3 = [
-    [ '0', '.', '=']
+    ['0', '.', '=']
 ]
 
-export const Calculator = () =>{
-    
+export const Calculator = () => {
+
 
     const [display, setDisplay] = React.useState<string>("0")
     const [acc, setAcc] = React.useState<null | string>(null)
     const [op, setOp] = React.useState<null | string>(null)
     const [result, setResult] = React.useState<null | string>(null)
-    
-    function toDecimal (x:number){
-        var num = Math.round( x*10000 )*0.0001;
-        return String( num )
+
+    function toDecimal(x: number) {
+        const num = x.toFixed(4)
+        return String(num)
     }
 
-    function ButtonSetting(button:string){
-        if (button === 'AC'){
+    function ButtonSetting(button: string) {
+        if (button === 'AC') {
             setDisplay("0")
             setAcc(null)
             setOp(null)
             return
         }
-        
-        if (button === '+/-'){
+
+        if (button === '+/-') {
             setDisplay(eval(`${display} ${'*'} ${'-1'}`))
 
             return
         }
-        
-        if (button === '%'){
-            setDisplay(String(eval(`${display} ${'*'} ${'0.01'}`)))
+
+        if (button === '%') {
+            setDisplay(String(toDecimal(eval(`${display} ${'*'} ${'0.01'}`))))
             return
         }
 
@@ -51,32 +51,32 @@ export const Calculator = () =>{
             if (result !== null) {
                 setResult(null)
                 return setDisplay(button)
-                
+
             }
 
-                
+
             if (display === "0") {
-                if (button === '.'){
+                if (button === '.') {
                     setDisplay('0.')
-                }else{
+                } else {
                     setDisplay(button)
                 }
-                
+
             } else {
                 if (button === ".") {
                     if (display.indexOf(".") > -1) {
                         return
                     }
-                    
+
                 }
                 setDisplay((str) => str + button)
 
             }
-            
+
             return
         }
 
-        if("+-*/".indexOf(button) > -1){
+        if ("+-*/".indexOf(button) > -1) {
             if (acc !== null) {
                 const result = toDecimal(eval(`${acc} ${op} ${display}`))
                 setAcc(result)
@@ -90,9 +90,10 @@ export const Calculator = () =>{
 
         }
 
-        
+
         if (button === "=") {
             if (op === null) return
+            console.log((`${acc} ${op} ${display}`))
             setDisplay(toDecimal(eval(`${acc} ${op} ${display}`)))
             setResult(display)
             setAcc(null)
@@ -100,66 +101,64 @@ export const Calculator = () =>{
         }
 
 
-        
+
 
     }
 
-   
-    
     return <div className="calc">
-        
-        <div className="display">{display}</div>
-       
-    {
-        buttons1.map((row, i) => {
-            return <div className="buttons1" key={'d' + i}>
-                {
-                    row.map((button, j) => {
-                        return <button key={'b' + j} onClick={() => {
-                            ButtonSetting(button)   
-                                }}>{button}
-                                </button>
-                    })
-                }
-            </div>
-        }
-        )
-    }
 
-{
-        buttons2.map((row, i) => {
-            return <div className="buttons2" key={'d' + i}>
-                {
-                    row.map((button, j) => {
-                        return <button key={'b' + j} onClick={() => {
-                            ButtonSetting(button)
-                                }}>{button}
-                                </button>
-                    })
-                }
-            </div>
+        <div className="display">{display}</div>
+
+        {
+            buttons1.map((row, i) => {
+                return <div className="buttons1" key={'d' + i}>
+                    {
+                        row.map((button, j) => {
+                            return <button key={'b' + j} onClick={() => {
+                                ButtonSetting(button)
+                            }}>{button}
+                            </button>
+                        })
+                    }
+                </div>
+            }
+            )
         }
-        )
-    }
-   
-   
-   
-    {
-        buttons3.map((row, i) => {
-            return <div className="buttons3" key={'d' + i}>
-                {
-                    row.map((button, j) => {
+
+        {
+            buttons2.map((row, i) => {
+                return <div className="buttons2" key={'d' + i}>
+                    {
+                        row.map((button, j) => {
+                            return <button key={'b' + j} onClick={() => {
+                                ButtonSetting(button)
+                            }}>{button}
+                            </button>
+                        })
+                    }
+                </div>
+            }
+            )
+        }
+
+
+
+        {
+            buttons3.map((row, i) => {
+                return <div className="buttons3" key={'d' + i}>
+                    {
+                        row.map((button, j) => {
 
                             return <button key={'b' + j} onClick={() => {
                                 ButtonSetting(button)
                             }}>{button}</button>
-                        
-                    })
-                }
-            </div>
+
+                        })
+                    }
+                </div>
+            }
+            )
         }
-        )
-    }
     </div>
 }
 
