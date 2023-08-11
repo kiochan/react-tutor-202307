@@ -101,6 +101,10 @@ div.display {
     padding: 0.5rem 1rem;
 }
 
+.invisible {
+    opacity: 0;
+}
+
 div.calc button ,
 div.calc span  {
     display:inline-block;
